@@ -1,11 +1,13 @@
 import { Router } from "express";
 import { prisma } from "../../../lib/prisma";
 import { State } from "../../../generated/prisma/client";
+import bcrypt from "bcryptjs";
 
 const router = Router();
 
 router.post("/", async (req, res) => {
-  const { name, password, email, user } = req.body;
+  const { name, email, user } = req.body;
+
   try {
     // Verifica se o email já está cadastrado!
     const existingEmail = await prisma.user.findUnique({
@@ -31,9 +33,17 @@ router.post("/", async (req, res) => {
       });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
     //Realiza o cadastro do usuário.
     const newUser = await prisma.user.create({
-      data: { name, password, email, user },
+      data: {
+        name: req.body.name,
+        password: hashPassword,
+        email: req.body.email,
+        user: req.body.user,
+      },
     });
 
     return res.status(201).json({
@@ -47,38 +57,22 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  const user = await prisma.user.findMany();
-  res.status(201).json(user);
-});
-
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const deleteUser = await prisma.user.delete({
-      where: { id },
-    });
-
-    return res.status(200).json({
-      message: "Usuário deletado com sucesso!",
-      user: deleteUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno no servidor.",
-    });
-  }
-});
-
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, password, email, user } = req.body;
 
   try {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+    //Realiza o cadastro do usuário.
     const updateUser = await prisma.user.update({
       where: { id },
-      data: { name, password, email, user },
+      data: {
+        name: req.body.name,
+        password: hashPassword,
+        email: req.body.email,
+        user: req.body.user,
+      },
     });
 
     return res.status(200).json({
@@ -122,22 +116,45 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.get("/filter", async (req, res) => {
-  const { name, email, user, state } = req.query;
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
 
   try {
+    const deleteUser = await prisma.user.delete({
+      where: { id },
+    });
+
+    return res.status(200).json({
+      message: "Usuário deletado com sucesso!",
+      user: deleteUser,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Erro interno no servidor.",
+    });
+  }
+});
+
+router.get("/", async (req, res) => {
+  const { name, email, user, state } = req.query;
+  try {
+    const filters: any = {
+      ...(name && { name: { contains: String(name), mode: "insensitive" } }),
+      ...(email && { email: String(email) }),
+      ...(user && { user: String(user) }),
+      ...(state && { state: String(state) as State }),
+    };
+
     const users = await prisma.user.findMany({
-      where: {
-        ...(name && { name: { contains: String(name), mode: "insensitive" } }),
-        ...(email && { email: String(email) }),
-        ...(user && { user: String(user) }),
-        ...(state && { state: String(state) as State }),
-      },
+      where: Object.keys(filters).length > 0 ? filters : undefined,
     });
 
     if (users.length === 0) {
       return res.status(404).json({
-        message: "Nenhum usuário entrado com o filtro informado!",
+        message:
+          Object.keys(filters).length === 0
+            ? "Nenhum usuário cadastrado!"
+            : "Nenhum usuário encontrado com o filtro informado!",
       });
     }
 
@@ -152,4 +169,35 @@ router.get("/filter", async (req, res) => {
     });
   }
 });
+
+router.post("/login", async (req, res) => {
+  try {
+    const userInfo = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: { email: userInfo.email },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuário não encontrado!",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(userInfo.password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Senha inválida",
+      });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Erro interno no servidor.",
+    });
+  }
+});
+
 export default router;
