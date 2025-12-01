@@ -9,7 +9,7 @@ const router = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET!
 
-router.post("/", async (req, res) => {
+router.post("/cadastro", async (req, res) => {
   const { name, email, user } = req.body;
 
   try {
