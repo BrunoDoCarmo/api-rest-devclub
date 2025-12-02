@@ -1,30 +1,24 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET!
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 const auth = (req: any, res: any, next: any) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
-    const token = req.header('Authorization')?.replace('Bearer ', '')
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Acesso negado. Token não fornecido." });
+  }
 
-    if (!token) {
-        return res.status(401).json(
-            { message: 'Acesso negado. Token não fornecido.' }
-        )
-    }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+  } catch (error) {
+    return res.status(401).json({ message: "Token expirado!" });
+  }
 
-    try {
-
-        const decoded = jwt.verify(token, JWT_SECRET)
-        req.user = decoded
-
-    } catch (error) {
-         return res.status(401).json(
-            { message: 'Token expirado!' }
-        )
-    }
-
-    
-    next()
-}
+  next();
+};
 
 export default auth;

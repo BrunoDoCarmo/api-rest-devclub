@@ -3,11 +3,11 @@ import { prisma } from "../../../lib/prisma";
 import { State } from "../../../generated/prisma/client";
 
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET!
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 router.post("/cadastro", async (req, res) => {
   const { name, email, user } = req.body;
@@ -61,84 +61,6 @@ router.post("/cadastro", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
-
-    //Realiza o cadastro do usuário.
-    const updateUser = await prisma.user.update({
-      where: { id },
-      data: {
-        name: req.body.name,
-        password: hashPassword,
-        email: req.body.email,
-        user: req.body.user,
-      },
-    });
-
-    return res.status(200).json({
-      message: "Usuário atualizado com sucesso!",
-      user: updateUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno no servidor.",
-    });
-  }
-});
-
-router.patch("/:id", async (req, res) => {
-  const { id } = req.params;
-  const { state } = req.body;
-
-  // 🔍 Validação correta usando o ENUM do Prisma
-  if (!Object.values(State).includes(state)) {
-    return res.status(400).json({
-      error: `O estado '${state}' é inválido. Utilize: ${Object.values(
-        State
-      ).join(", ")}`,
-    });
-  }
-
-  try {
-    const updateUser = await prisma.user.update({
-      where: { id },
-      data: { state },
-    });
-
-    return res.status(200).json({
-      message: "Usuário atualizado com sucesso!",
-      user: updateUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno no servidor.",
-    });
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const deleteUser = await prisma.user.delete({
-      where: { id },
-    });
-
-    return res.status(200).json({
-      message: "Usuário deletado com sucesso!",
-      user: deleteUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno no servidor.",
-    });
-  }
-});
-
 router.get("/", async (req, res) => {
   const { name, email, user, state } = req.query;
   try {
@@ -176,34 +98,34 @@ router.get("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const userInfo = req.body;
+    const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({
-      where: { email: userInfo.email },
+      where: { email },
     });
 
     if (!user) {
-      return res.status(404).json({
-        message: "Usuário não encontrado!",
-      });
+      return res.status(404).json({ message: "Usuário não encontrado!" });
     }
 
-    const isMatch = await bcrypt.compare(userInfo.password, user.password);
-
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({
-        message: "Senha inválida",
-      });
+      return res.status(400).json({ message: "Senha inválida" });
     }
 
-    if (!JWT_SECRET) {
-      throw new Error("JWT_SECRET não configurado!");
-    }
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
+      expiresIn: "1m",
+    });
 
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1m" });
-
-    return res.status(200).json(token);
-    
+    return res.status(200).json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        state: user.state,
+      },
+    });
   } catch (error) {
     return res.status(500).json({
       error: "Erro interno no servidor.",
