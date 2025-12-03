@@ -98,10 +98,15 @@ router.get("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { identifier, password } = req.body;
 
-    const user = await prisma.user.findUnique({
-      where: { email },
+    const user = await prisma.user.findFirst({
+      where: { 
+        OR: [
+          { email: identifier },
+          { user: identifier },
+        ]
+      }
     });
 
     if (!user) {
@@ -121,9 +126,9 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user.id,
+        user: user.user,
         email: user.email,
         name: user.name,
-        state: user.state,
       },
     });
   } catch (error) {

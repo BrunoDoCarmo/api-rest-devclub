@@ -5,7 +5,7 @@ import axios from "axios";
 import api from "../../services/api";
 
 const Login = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
+  const identifierRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const { data } = await api.post("/public/user/login", {
-        email: emailRef.current?.value,
+        identifier: identifierRef.current?.value,
         password: passwordRef.current?.value,
       });
 
@@ -46,7 +46,7 @@ const Login = () => {
     <div>
       <h2>Cadastro</h2>
       <form onSubmit={handleSubmit}>
-        <input ref={emailRef} type="text" placeholder="Email" />
+        <input ref={identifierRef} type="text" placeholder="Email ou Usuário" />
         <input ref={passwordRef} type="password" placeholder="Senha" />
         <button type="submit">Acessar</button>
         <Link to="/Cadastro">Criar sua conta!</Link>
