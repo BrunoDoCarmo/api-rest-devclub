@@ -63,7 +63,7 @@ router.put("alterar/:id", async (req, res) => {
         name: req.body.name,
         password: hashPassword,
         email: req.body.email,
-        user: req.body.user,
+        username: req.body.username,
       },
     });
 

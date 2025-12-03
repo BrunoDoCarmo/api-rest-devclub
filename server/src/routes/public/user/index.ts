@@ -10,7 +10,7 @@ const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 router.post("/cadastro", async (req, res) => {
-  const { name, email, user } = req.body;
+  const { name, email, username } = req.body;
 
   try {
     // Verifica se o email já está cadastrado!
@@ -27,13 +27,13 @@ router.post("/cadastro", async (req, res) => {
 
     // Verifica se o usuário já está cadastrado!
     const existingUser = await prisma.user.findUnique({
-      where: { user },
+      where: { username },
     });
 
     //Se o usuário estiver já cadastrado, retorna uma mensagem de erro.
     if (existingUser) {
       return res.status(409).json({
-        error: `O usuário ${user} já está cadastrado!`,
+        error: `O usuário ${username} já está cadastrado!`,
       });
     }
 
@@ -46,7 +46,7 @@ router.post("/cadastro", async (req, res) => {
         name: req.body.name,
         password: hashPassword,
         email: req.body.email,
-        user: req.body.user,
+        username: req.body.username,
       },
     });
 
@@ -104,7 +104,7 @@ router.post("/login", async (req, res) => {
       where: { 
         OR: [
           { email: identifier },
-          { user: identifier },
+          { username: identifier },
         ]
       }
     });
@@ -126,7 +126,7 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user.id,
-        user: user.user,
+        username: user.username,
         email: user.email,
         name: user.name,
       },
@@ -134,6 +134,18 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       error: "Erro interno no servidor.",
+    });
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  try {
+    return res.status(200).json({
+      message: "Logout realizado com sucesso!"
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Erro interno no servidor."
     });
   }
 });
