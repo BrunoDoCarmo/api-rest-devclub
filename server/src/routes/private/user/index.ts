@@ -29,7 +29,7 @@ router.delete("/delete/:id", async (req, res) => {
   if (id !== loggedUserId) {
     return res.status(403).json({
       error:
-        "Você não pode excluir, este usuário. Verifique se este usuário esta logado.",
+        "Você não pode excluir este usuário",
     });
   }
 
