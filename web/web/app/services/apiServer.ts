@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const api = axios.create({
+const apiServer = axios.create({
   baseURL: "http://localhost:9090",
 });
 
-api.interceptors.response.use(
+apiServer.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
@@ -20,4 +20,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default apiServer;

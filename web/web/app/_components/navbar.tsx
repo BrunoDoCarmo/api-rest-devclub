@@ -1,24 +1,37 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, CircleUserRound, Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
 import LogoutButton from "./logout-button";
+import api from "../services/apiServer";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState<string | null>(null);
+  const [ userName, setUserName ] = useState<string | null>(null)
 
-  const [ userName, setUserName ] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("username");
+  useEffect(() => {
+    const fetchUser = async () => {
+      if( typeof window === "undefined") return;
+
+      const id = localStorage.getItem("userId")
+      if(!id) return
+
+      try {
+        const res = await api.get(`/public/user/username/${id}`)
+          setUserName(res.data.user.name)
+      } catch(error) {
+        console.log("Erro ao buscar usuário:", error)
+      }
     }
-    return null
-  })
+
+    fetchUser()
+  }, [])
   
 
   const toggleMenu = useCallback(() => {
@@ -42,19 +55,13 @@ const Navbar = () => {
 
   const links: NavLink[] = [
     { href: "/", label: "Dashboard" },
-    { href: "/transactions", label: "Transações" },
-    { href: "/subscription", label: "Assinatura" },
-
     {
       label: "Cadastro",
       submenu: [
-        { href: "/register=client", label: "Cliente" },
-        { href: "/register=product", label: "Produto" },
-        { href: "/register=supplier", label: "Fornecedor" },
+        { href: "/register=user", label: "Usuário" },
       ],
     },
-
-    { href: "/financial", label: "Financeiro" },
+    // { href: "/financial", label: "Financeiro" },
   ];
 
 
@@ -173,7 +180,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between">
             <div className="flex flex-row items-center gap-1">
               <CircleUserRound />
-              <span className="text-sm">{userName ?? "Usuário"}</span>
+              <span className="text-sm capitalize">{userName ?? "Usuário"}</span>
             </div>
 
             <div className="flex flex-col items-center gap-1">

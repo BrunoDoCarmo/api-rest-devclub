@@ -6,7 +6,7 @@ import { Button } from "../_components/ui/button";
 import Modal from "../_components/modal";
 import { useState } from "react";
 import UserLogin from "./_components/login";
-import UserCadastro from "./_components/cadastro";
+import UserCadastro from "./_components/user-cadastro";
 import UserEsqueceuSenha from "./_components/esqueceu-senha";
 
 const LoginPage = () => {
