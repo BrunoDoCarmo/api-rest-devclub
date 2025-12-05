@@ -23,7 +23,11 @@ const UserPage = () => {
   useEffect(() => {
     async function fetchUsers() {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) {
+        setUsers([])
+        console.warn("Token não encontrado no localStorage")
+        return;
+      } 
 
       const result = await userListarUsuarioAction(token);
 

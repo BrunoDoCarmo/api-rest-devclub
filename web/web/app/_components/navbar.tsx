@@ -7,7 +7,7 @@ import { ChevronRight, CircleUserRound, Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
 import LogoutButton from "./logout-button";
-import api from "../services/apiServer";
+import apiClient from "../services/apiClient";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -23,7 +23,7 @@ const Navbar = () => {
       if(!id) return
 
       try {
-        const res = await api.get(`/public/user/username/${id}`)
+        const res = await apiClient.get(`/public/user/username/${id}`)
           setUserName(res.data.user.name)
       } catch(error) {
         console.log("Erro ao buscar usuário:", error)

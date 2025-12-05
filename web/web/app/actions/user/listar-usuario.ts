@@ -1,11 +1,9 @@
-"use server"
-
 import axios from "axios";
-import apiServer from "../../services/apiServer"
+import apiClient from "../../services/apiClient"
 
 export async function userListarUsuarioAction(token: string) {
   try {
-    const { data } = await apiServer.get("/private/user/list-user", {
+    const { data } = await apiClient.get("/private/user/list-user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,6 +14,7 @@ export async function userListarUsuarioAction(token: string) {
       users: data.users ?? [],
     };
   } catch (error: unknown) {
+    console.error("Erro ao listar usuários:", error);
     if (axios.isAxiosError(error)) {
       return {
         success: false,

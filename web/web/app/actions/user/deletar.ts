@@ -1,11 +1,11 @@
 "use server"
 
 import axios from "axios";
-import apiServer from "../../services/apiServer"
+import apiClient from "../../services/apiClient"
 
 export async function userDeletarUsuarioAction(id: string, token: string) {
   try {
-    const { data } = await apiServer.delete(`/private/user/delete/${id}`, {
+    const { data } = await apiClient.delete(`/private/user/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
