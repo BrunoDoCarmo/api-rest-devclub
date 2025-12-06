@@ -1,5 +1,5 @@
-import { UserResponseModel } from "../models/list-user.model"
-import { listUsersRepository } from "../repositories/list-users.repository"
+import { UserResponseModel } from "../../models/user/list-user.model"
+import { listUsersRepository } from "../../repositories/user/list-users.repository"
 
 export async function listUsersService() {
     //Aqui poderia ter regra de negócio, validações, etc.

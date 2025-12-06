@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { listUsersController } from "../../controller/list-users.controller";
-import { deleteUserController } from "../../controller/delete-user.controller";
-import { changeUserController } from "../../controller/change-user.controller";
+import { listUsersController } from "../../controller/user/list-users.controller";
+import { deleteUserController } from "../../controller/user/delete-user.controller";
+import { changeUserController } from "../../controller/user/change-user.controller";
 import { changeUserStateController } from "../../controller/change-user-state.controller";
-import { logoutUserController } from "../../controller/logout-user.controller";
-import { findUserByIdController } from "../../controller/find-user-by-id.controller";
+import { logoutUserController } from "../../controller/user/logout-user.controller";
+import { findUserByIdController } from "../../controller/user/find-user-by-id.controller";
 
 const router = Router()
 

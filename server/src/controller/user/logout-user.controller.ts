@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { logoutUserService } from "../services/logout-user.service";
+import { logoutUserService } from "../../services/user/logout-user.service";
 
 export async function logoutUserController(req: Request, res: Response) {
     try {

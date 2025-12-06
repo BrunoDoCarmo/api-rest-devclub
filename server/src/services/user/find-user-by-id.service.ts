@@ -1,5 +1,5 @@
-import type { UserResponse } from "../interfaces/user-response.interface"
-import { findUserByIdRepository } from "../repositories/find-user-by-id.repository"
+import type { UserResponse } from "../../interfaces/user/user-response.interface"
+import { findUserByIdRepository } from "../../repositories/user/find-user-by-id.repository"
 
 export async function findUserByIdService(id: string): Promise<UserResponse> {
     const user = await findUserByIdRepository(id)

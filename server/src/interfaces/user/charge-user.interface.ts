@@ -1,4 +1,4 @@
-import type { UserState } from "../constants/user-state.contant";
+import type { UserState } from "../../constants/user/user-state.contant";
 
 export interface changeUserParams {
     name: string,

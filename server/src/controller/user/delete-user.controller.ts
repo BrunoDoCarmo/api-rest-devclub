@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { deleteUserService } from "../services/delete-user.service";
-import type { idUserParams } from "../interfaces/id-user.interface";
+import { deleteUserService } from "../../services/user/delete-user.service";
+import type { idUserParams } from "../../interfaces/user/id-user.interface";
 
 export async function deleteUserController(req: Request<idUserParams>, res: Response) {
     try {

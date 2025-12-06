@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { changeUserServices } from "../services/change-user.service";
-import type { idUserParams } from "../interfaces/id-user.interface";
+import { changeUserServices } from "../../services/user/change-user.service";
+import type { idUserParams } from "../../interfaces/user/id-user.interface";
 
 export async function changeUserController(req: Request<idUserParams>, res: Response) {
     const { id } = req.params

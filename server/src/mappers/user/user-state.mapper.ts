@@ -1,5 +1,5 @@
-import { USER_STATE, type UserState } from "../constants/user-state.contant";
-import { State } from "../generated/prisma/client";
+import { USER_STATE, type UserState } from "../../constants/user/user-state.contant";
+import { State } from "../../generated/prisma/client";
 
 export function mapToPrismaState(state: UserState): State {
     switch (state) {

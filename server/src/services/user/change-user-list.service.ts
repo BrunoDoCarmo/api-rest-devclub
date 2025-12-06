@@ -1,5 +1,5 @@
-import { State } from "../generated/prisma/enums";
-import { changeUserStateRepository } from "../repositories/change-user-state.repository";
+import { State } from "../../generated/prisma/enums";
+import { changeUserStateRepository } from "../../repositories/user/change-user-state.repository";
 
 export async function changeUserStateService(id: string, state: State) {
     //Validação do ENUM (regra de negocio -> no service)

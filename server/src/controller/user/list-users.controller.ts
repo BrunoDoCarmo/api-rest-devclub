@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import { listUsersService } from "../services/list-users.service"
+import { listUsersService } from "../../services/user/list-users.service"
 
 export async function listUsersController(req: Request, res: Response) {
     try {

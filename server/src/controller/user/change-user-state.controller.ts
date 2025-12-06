@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { changeUserStateService } from "../services/change-user-list.service";
-import type { idUserParams } from "../interfaces/id-user.interface";
-import type { changeUserStateParams } from "../interfaces/change-user-state.interface";
+import { changeUserStateService } from "../../services/user/change-user-list.service";
+import type { idUserParams } from "../../interfaces/user/id-user.interface";
+import type { changeUserStateParams } from "../../interfaces/user/change-user-state.interface";
 
 export async function changeUserStateController(req: Request<idUserParams, any, changeUserStateParams>, res: Response) {
     const { id } = req.params;

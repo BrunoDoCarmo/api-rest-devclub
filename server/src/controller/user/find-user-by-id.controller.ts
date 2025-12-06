@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { findUserByIdService } from "../services/find-user-by-id.service";
-import type { idUserParams } from "../interfaces/id-user.interface";
+import { findUserByIdService } from "../../services/user/find-user-by-id.service";
+import type { idUserParams } from "../../interfaces/user/id-user.interface";
 
 export async function findUserByIdController(req: Request<idUserParams>, res: Response) {
     try {
