@@ -1,4 +1,4 @@
-import { UserResponseModel } from "../models/user.model"
+import { UserResponseModel } from "../models/list-user.model"
 import { listUsersRepository } from "../repositories/list-users.repository"
 
 export async function listUsersService() {

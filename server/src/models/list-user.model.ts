@@ -5,4 +5,5 @@ export const UserResponseModel = z.object({
     name: z.string(),
     email: z.string(),
     username: z.string(),
+    state: z.enum(["ACTIVE", "INACTIVE", "PENDING"]),
 })

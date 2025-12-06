@@ -96,45 +96,26 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/username/:id", async (req, res) => {
-  try {
-    const { id } = req.params
-
-    const user = await prisma.user.findUnique({
-      where: { id: id },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        name: true
-      }
-    })
-
-    if(!user) {
-      return res.status(404).json({ message: "Usuário não encontrado!"})
-    }
-
-    return res.status(200).json({ user })
-  } catch(error) {
-    return res.status(500).json({ error: "Erro ao buscar usuário!"})
-  }
-})
-
 router.post("/login", async (req, res) => {
   try {
     const { identifier, password } = req.body;
 
     const user = await prisma.user.findFirst({
       where: { 
-        OR: [
-          { email: identifier },
-          { username: identifier },
+        AND: [
+          {
+            OR: [
+              { email: identifier },
+              { username: identifier },
+            ]
+          },
+          { state: "ACTIVE" },
         ]
       }
     });
 
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado!" });
+     if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado ou inativo!" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -143,7 +124,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: "1m",
+      expiresIn: "7d",
     });
 
     return res.status(200).json({
@@ -158,18 +139,6 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       error: "Erro interno no servidor.",
-    });
-  }
-});
-
-router.post("/logout", async (req, res) => {
-  try {
-    return res.status(200).json({
-      message: "Logout realizado com sucesso!"
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Erro interno no servidor."
     });
   }
 });
