@@ -7,21 +7,138 @@ datasource db {
   provider = "postgresql"
 }
 
+model Responsible {
+  id             String           @id @default(uuid())
+  type           Type_Responsible
+  name           String //NOME
+  cpf            String?
+  cnpj           String?
+  public_place   String //LOGRADOURO
+  number         String //NUMERO
+  neighborhood   String //BAIRRO
+  complement     String? //COMPLEMENTO
+  cep            String
+  city           String //CIDADE
+  uf             String
+  telephone1     String? //TELEFONE1
+  telephone2     String? //TELEFONE2
+  cell_phone1    String //CELULAR1
+  cell_phone2    String? //CELULAR2
+  email          String
+  createdAt      DateTime         @default(now()) //DATA CRIACAO
+  updatedAt      DateTime         @updatedAt //DATA ALTERACAO
+  tenant         Tenant           @relation(fields: [tenantId], references: [id])
+  tenantId       String           @unique
+  companies_data Company_Data[]
+  customers      Customer[]
+  state          State            @default(ACTIVE) //ESTADO
+
+  @@map("responsible")
+}
+
+model Company_Data {
+  id            String      @id @default(uuid())
+  company_name  String //RAZAO SOCIAL
+  fantasy       String //FANTASIA
+  cnpj          String
+  ie            String?
+  public_place  String //LOGRADOURO
+  number        String //NUMERO
+  neighborhood  String //BAIRRO
+  complement    String? //COMPLEMENTO
+  cep           String
+  city          String //CIDADE
+  uf            String
+  telephone1    String? //TELEFONE1
+  telephone2    String? //TELEFONE2
+  cell_phone1   String //CELULAR1
+  cell_phone2   String? //CELULAR2
+  email         String
+  site          String?
+  createdAt     DateTime    @default(now()) //DATA CRIACAO
+  updatedAt     DateTime    @updatedAt //DATA ALTERACAO
+  responsible   Responsible @relation(fields: [responsibleId], references: [id])
+  responsibleId String
+  state         State       @default(ACTIVE) //ESTADO
+
+  @@map("empresa_dados")
+}
+
+model Tenant {
+  id          String       @id @default(uuid())
+  name        String //NOME
+  size        Size         @default(SMALL) //TAMANHO
+  createdAt   DateTime     @default(now()) //DATA CRIACAO
+  updatedAt   DateTime     @updatedAt //DATA ALTERACAO
+  responsible Responsible? //RESPONSAVEL
+  user        User[] //USUARIO
+
+  @@map("tenant")
+}
+
 model User {
   id        String   @id @default(uuid())
-  name      String
-  password  String
+  name      String //NOME
+  password  String //SENHA
   email     String   @unique
-  username  String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  state     State    @default(ACTIVE)
+  username  String   @unique //NOME DE USUARIO
+  createdAt DateTime @default(now()) //DATA CRIACAO
+  updatedAt DateTime @updatedAt //DATA ALTERACAO
+  state     State    @default(ACTIVE) //ESTADO
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  String
 
   @@map("user")
 }
 
+model Customer {
+  id            String      @id @default(uuid())
+  name          String //NOME
+  cpf           String?     @unique
+  cnpj          String?     @unique
+  ie            String?
+  regime        Regime      @default(ICMS_TAXPAYER)
+  public_place  String //LOGRADOURO
+  number        String //NUMERO
+  neighborhood  String //BAIRRO
+  complement    String? //COMPLEMENTO
+  cep           String
+  city          String //CIDADE
+  uf            String
+  telephone1    String? //TELEFONE1
+  telephone2    String? //TELEFONE2
+  cell_phone1   String //CELULAR1
+  cell_phone2   String? //CELULAR2
+  email         String
+  contact       String? //CONTATO
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  responsible   Responsible @relation(fields: [responsibleId], references: [id])
+  responsibleId String
+  state         State       @default(ACTIVE) //ESTADO
+
+  @@map("customer")
+}
+
+enum Type_Responsible {
+  PHYSICAL //FISICA
+  LEGAL //JURIDICA
+}
+
+enum Size {
+  SMALL //PEQUENO
+  MEDIUM //MEDIO
+  LARGE //GRANDE
+}
+
 enum State {
-  ACTIVE
-  DISABLED
-  DELETED
+  ACTIVE //ATIVO
+  DISABLED //DESATIVADO
+  DELETED //DELETADO
+}
+
+enum Regime {
+  ICMS_TAXPAYER //CONTRIBUINTE DE ICMS
+  EXEMPT_FROM_REGISTRATION //ISENTO DE INSCRICAO
+  NON_TAXPAYER //NAO CONTRIBUINTE
 }
