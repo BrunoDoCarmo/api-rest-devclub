@@ -11,8 +11,8 @@ model Responsible {
   id             String           @id @default(uuid())
   type           Type_Responsible
   name           String //NOME
-  cpf            String?
-  cnpj           String?
+  cpf            String?          @unique
+  cnpj           String?          @unique
   public_place   String //LOGRADOURO
   number         String //NUMERO
   neighborhood   String //BAIRRO
@@ -40,7 +40,7 @@ model Company_Data {
   id            String      @id @default(uuid())
   company_name  String //RAZAO SOCIAL
   fantasy       String //FANTASIA
-  cnpj          String
+  cnpj          String      @unique
   ie            String?
   public_place  String //LOGRADOURO
   number        String //NUMERO
@@ -61,7 +61,7 @@ model Company_Data {
   responsibleId String
   state         State       @default(ACTIVE) //ESTADO
 
-  @@map("empresa_dados")
+  @@map("company_data")
 }
 
 model Tenant {
