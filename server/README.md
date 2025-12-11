@@ -1,53 +1,54 @@
-# Configuração para um back-end em NOJE.js
+# BACK-END
+## Configuração para um back-end em NOJE.js
 
-## CRIAR PROJETO
+### CRIAR PROJETO
 npm init -y
 
-## Dependências
-### TYPESCRIPT
+### Dependências
+#### TYPESCRIPT
 npm install -D typescript ts-node-dev @types/node @types/express
 npx tsc --init
 
-### EXPRESS
+#### EXPRESS
 npm install express
 npm install -D @types/express
 
-### PRISMA
+#### PRISMA
 npm install prisma @types/node @types/pg --save-dev
 npm install @prisma/client @prisma/adapter-pg pg dotenv
 npx prisma init --datasource-provider postgresql --output ../generated/prisma
 
-### ZOD
+#### ZOD
 npm install zod
 
-### BCRYPTJS
+#### BCRYPTJS
 npm install bcryptjs
-##### npm install --save-dev @types/bcrypt
-##### npm install --save-dev @types/bcryptjs
+###### npm install --save-dev @types/bcrypt
+###### npm install --save-dev @types/bcryptjs
 
-### CORS
+#### CORS
 npm install cors
 npm i --save-dev @types/cors
 
-### JSONWEBTOKEN
+#### JSONWEBTOKEN
 npm install jsonwebtoken
 npm install --save-dev @types/jsonwebtoken
 
-### TSX
+#### TSX
 npm install tsx
 
-## ALTERAR PACKAGE.json
+### ALTERAR PACKAGE.json
 "type": "module"
 "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
 
-## JWT SECRET
+### JWT SECRET
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
-## RODAR PROJETO
+### RODAR PROJETO
 
-### Desenvolvimento:
+#### Desenvolvimento:
 npm run dev
 
-### Produção:
+#### Produção:
 npm run build
 npm start
