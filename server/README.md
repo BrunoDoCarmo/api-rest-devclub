@@ -1,41 +1,53 @@
 # Configuração para um back-end em NOJE.js
 
-## Iniciar o projeto
-
+## CRIAR PROJETO
 npm init -y
 
-## Dependências principais
-
-npm install express
-npm install jsonwebtoken
-npm install bcryptj
-npm i cors
-
-## Dependências de desenvolvimento
-
-npm install -D typescript ts-node-dev @types/express @types/node
-npm i --save-dev @types/bcryptj
-npm i --save-dev @types/jsonwebtoken
-npm i --save-dev @types/cors
-
-## Criar o arquivo de configuração do TypeScript
-
+## Dependências
+### TYPESCRIPT
+npm install -D typescript ts-node-dev @types/node @types/express
 npx tsc --init
 
-## Altere o package.json
+### EXPRESS
+npm install express
+npm install -D @types/express
 
+### PRISMA
+npm install prisma @types/node @types/pg --save-dev
+npm install @prisma/client @prisma/adapter-pg pg dotenv
+npx prisma init --datasource-provider postgresql --output ../generated/prisma
+
+### ZOD
+npm install zod
+
+### BCRYPTJS
+npm install bcryptjs
+##### npm install --save-dev @types/bcrypt
+##### npm install --save-dev @types/bcryptjs
+
+### CORS
+npm install cors
+npm i --save-dev @types/cors
+
+### JSONWEBTOKEN
+npm install jsonwebtoken
+npm install --save-dev @types/jsonwebtoken
+
+### TSX
+npm install tsx
+
+## ALTERAR PACKAGE.json
 "type": "module"
 "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
 
 ## JWT SECRET
-
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
-### Desenvolvimento:
+## RODAR PROJETO
 
+### Desenvolvimento:
 npm run dev
 
 ### Produção:
-
 npm run build
 npm start
