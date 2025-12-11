@@ -1,54 +1,98 @@
-# BACK-END
-## Configuração para um back-end em NOJE.js
+📌 Backend Node.js — Guia de Configuração
 
-### CRIAR PROJETO
+Este projeto utiliza Node.js, TypeScript, Express, Prisma, JWT, Zod, entre outras dependências essenciais para criação de APIs modernas.
+
+🚀 Tecnologias Utilizadas
+
+Node.js
+
+TypeScript
+
+Express
+
+Prisma ORM
+
+PostgreSQL
+
+Zod
+
+bcryptjs
+
+CORS
+
+JSON Web Token (JWT)
+
+TSX / ts-node-dev
+
+📂 Criar o Projeto
 npm init -y
 
-### Dependências
-#### TYPESCRIPT
+📦 Instalar Dependências
+🟦 TypeScript
 npm install -D typescript ts-node-dev @types/node @types/express
 npx tsc --init
 
-#### EXPRESS
+🟩 Express
 npm install express
 npm install -D @types/express
 
-#### PRISMA
+🟪 Prisma + PostgreSQL
 npm install prisma @types/node @types/pg --save-dev
 npm install @prisma/client @prisma/adapter-pg pg dotenv
+
 npx prisma init --datasource-provider postgresql --output ../generated/prisma
 
-#### ZOD
+🟧 Zod
 npm install zod
 
-#### BCRYPTJS
+🔐 bcryptjs
 npm install bcryptjs
-###### npm install --save-dev @types/bcrypt
-###### npm install --save-dev @types/bcryptjs
+# Tipagens opcionais
+# npm install --save-dev @types/bcrypt
+# npm install --save-dev @types/bcryptjs
 
-#### CORS
+🔓 CORS
 npm install cors
 npm i --save-dev @types/cors
 
-#### JSONWEBTOKEN
+🔑 JWT
 npm install jsonwebtoken
 npm install --save-dev @types/jsonwebtoken
 
-#### TSX
+🚀 TSX
 npm install tsx
 
-### ALTERAR PACKAGE.json
-"type": "module"
-"dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+📝 Configurar package.json
 
-### JWT SECRET
+Adicione ou ajuste:
+
+{
+  "type": "module",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  }
+}
+
+🔐 Gerar Secret do JWT
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
-### RODAR PROJETO
-
-#### Desenvolvimento:
+▶️ Rodar o Projeto
+🧪 Ambiente de Desenvolvimento
 npm run dev
 
-#### Produção:
+🚀 Ambiente de Produção
 npm run build
 npm start
+
+📁 Estrutura Recomendada do Projeto
+/src
+ ┣ controllers/
+ ┣ services/
+ ┣ repositories/
+ ┣ middlewares/
+ ┣ utils/
+ ┣ prisma/
+ ┣ server.ts
+ ┗ app.ts
