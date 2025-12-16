@@ -1,5 +1,0 @@
-export const USER_STATE = {
-  ACTIVE: "ATIVO",
-  DISABLED: "DESATIVADO",
-  DELETED: "DELETADO",
-}

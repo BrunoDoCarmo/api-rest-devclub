@@ -25,13 +25,16 @@ model Responsible {
   cell_phone1    String //CELULAR1
   cell_phone2    String? //CELULAR2
   email          String
+  state          State            @default(ACTIVE) //ESTADO
   createdAt      DateTime         @default(now()) //DATA CRIACAO
   updatedAt      DateTime         @updatedAt //DATA ALTERACAO
+
   tenant         Tenant           @relation(fields: [tenantId], references: [id])
   tenantId       String           @unique
+  
   companies_data Company_Data[]
   customers      Customer[]
-  state          State            @default(ACTIVE) //ESTADO
+  users          User[]
 
   @@map("responsible")
 }
@@ -70,23 +73,27 @@ model Tenant {
   size        Size         @default(SMALL) //TAMANHO
   createdAt   DateTime     @default(now()) //DATA CRIACAO
   updatedAt   DateTime     @updatedAt //DATA ALTERACAO
-  responsible Responsible? //RESPONSAVEL
+
+  responsible Responsible //RESPONSAVEL
   user        User[] //USUARIO
 
   @@map("tenant")
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String //NOME
-  password  String //SENHA
-  email     String   @unique
-  username  String   @unique //NOME DE USUARIO
-  createdAt DateTime @default(now()) //DATA CRIACAO
-  updatedAt DateTime @updatedAt //DATA ALTERACAO
-  state     State    @default(ACTIVE) //ESTADO
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
-  tenantId  String
+  id            String       @id @default(uuid())
+  name          String //NOME
+  email         String       @unique
+  username      String       @unique //NOME DE USUARIO
+  password      String //SENHA
+  role          UserRole     @default(USER)
+  state         State        @default(ACTIVE) //ESTADO
+  createdAt     DateTime     @default(now()) //DATA CRIACAO
+  updatedAt     DateTime     @updatedAt //DATA ALTERACAO
+  tenant        Tenant       @relation(fields: [tenantId], references: [id])
+  tenantId      String
+  responsible   Responsible @relation(fields: [responsibleId], references: [id])
+  responsibleId String
 
   @@map("user")
 }
@@ -129,6 +136,11 @@ enum Size {
   SMALL //PEQUENO
   MEDIUM //MEDIO
   LARGE //GRANDE
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 enum State {
