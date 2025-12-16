@@ -39,6 +39,19 @@ model Responsible {
   @@map("responsible")
 }
 
+model Tenant {
+  id          String       @id @default(uuid())
+  name        String //NOME
+  size        Size         @default(SMALL) //TAMANHO
+  createdAt   DateTime     @default(now()) //DATA CRIACAO
+  updatedAt   DateTime     @updatedAt //DATA ALTERACAO
+
+  responsible Responsible? //RESPONSAVEL
+  user        User[] //USUARIO
+
+  @@map("tenant")
+}
+
 model Company_Data {
   id            String      @id @default(uuid())
   company_name  String //RAZAO SOCIAL
@@ -58,26 +71,14 @@ model Company_Data {
   cell_phone2   String? //CELULAR2
   email         String
   site          String?
+  state         State       @default(ACTIVE) //ESTADO
   createdAt     DateTime    @default(now()) //DATA CRIACAO
   updatedAt     DateTime    @updatedAt //DATA ALTERACAO
+  
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
-  state         State       @default(ACTIVE) //ESTADO
 
   @@map("company_data")
-}
-
-model Tenant {
-  id          String       @id @default(uuid())
-  name        String //NOME
-  size        Size         @default(SMALL) //TAMANHO
-  createdAt   DateTime     @default(now()) //DATA CRIACAO
-  updatedAt   DateTime     @updatedAt //DATA ALTERACAO
-
-  responsible Responsible //RESPONSAVEL
-  user        User[] //USUARIO
-
-  @@map("tenant")
 }
 
 model User {
@@ -90,8 +91,10 @@ model User {
   state         State        @default(ACTIVE) //ESTADO
   createdAt     DateTime     @default(now()) //DATA CRIACAO
   updatedAt     DateTime     @updatedAt //DATA ALTERACAO
+  
   tenant        Tenant       @relation(fields: [tenantId], references: [id])
   tenantId      String
+  
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
 
@@ -118,11 +121,12 @@ model Customer {
   cell_phone2   String? //CELULAR2
   email         String
   contact       String? //CONTATO
+  state         State       @default(ACTIVE) //ESTADO
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
-  state         State       @default(ACTIVE) //ESTADO
 
   @@map("customer")
 }
