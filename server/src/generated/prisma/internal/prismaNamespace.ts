@@ -819,7 +819,6 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ResponsibleScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   name: 'name',
   cpf: 'cpf',
   cnpj: 'cnpj',
@@ -846,6 +845,7 @@ export type ResponsibleScalarFieldEnum = (typeof ResponsibleScalarFieldEnum)[key
 
 export const TenantScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   name: 'name',
   size: 'size',
   createdAt: 'createdAt',
@@ -974,20 +974,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Type_Responsible'
- */
-export type EnumType_ResponsibleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type_Responsible'>
-    
-
-
-/**
- * Reference to a field of type 'Type_Responsible[]'
- */
-export type ListEnumType_ResponsibleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type_Responsible[]'>
-    
-
-
-/**
  * Reference to a field of type 'State'
  */
 export type EnumStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'State'>
@@ -1012,6 +998,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Type_Responsible'
+ */
+export type EnumType_ResponsibleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type_Responsible'>
+    
+
+
+/**
+ * Reference to a field of type 'Type_Responsible[]'
+ */
+export type ListEnumType_ResponsibleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Type_Responsible[]'>
     
 
 

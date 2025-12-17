@@ -26,6 +26,7 @@ export type AggregateTenant = {
 
 export type TenantMinAggregateOutputType = {
   id: string | null
+  type: $Enums.Type_Responsible | null
   name: string | null
   size: $Enums.Size | null
   createdAt: Date | null
@@ -34,6 +35,7 @@ export type TenantMinAggregateOutputType = {
 
 export type TenantMaxAggregateOutputType = {
   id: string | null
+  type: $Enums.Type_Responsible | null
   name: string | null
   size: $Enums.Size | null
   createdAt: Date | null
@@ -42,6 +44,7 @@ export type TenantMaxAggregateOutputType = {
 
 export type TenantCountAggregateOutputType = {
   id: number
+  type: number
   name: number
   size: number
   createdAt: number
@@ -52,6 +55,7 @@ export type TenantCountAggregateOutputType = {
 
 export type TenantMinAggregateInputType = {
   id?: true
+  type?: true
   name?: true
   size?: true
   createdAt?: true
@@ -60,6 +64,7 @@ export type TenantMinAggregateInputType = {
 
 export type TenantMaxAggregateInputType = {
   id?: true
+  type?: true
   name?: true
   size?: true
   createdAt?: true
@@ -68,6 +73,7 @@ export type TenantMaxAggregateInputType = {
 
 export type TenantCountAggregateInputType = {
   id?: true
+  type?: true
   name?: true
   size?: true
   createdAt?: true
@@ -149,6 +155,7 @@ export type TenantGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type TenantGroupByOutputType = {
   id: string
+  type: $Enums.Type_Responsible
   name: string
   size: $Enums.Size
   createdAt: Date
@@ -178,6 +185,7 @@ export type TenantWhereInput = {
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   id?: Prisma.StringFilter<"Tenant"> | string
+  type?: Prisma.EnumType_ResponsibleFilter<"Tenant"> | $Enums.Type_Responsible
   name?: Prisma.StringFilter<"Tenant"> | string
   size?: Prisma.EnumSizeFilter<"Tenant"> | $Enums.Size
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
@@ -188,6 +196,7 @@ export type TenantWhereInput = {
 
 export type TenantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -201,6 +210,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
+  type?: Prisma.EnumType_ResponsibleFilter<"Tenant"> | $Enums.Type_Responsible
   name?: Prisma.StringFilter<"Tenant"> | string
   size?: Prisma.EnumSizeFilter<"Tenant"> | $Enums.Size
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
@@ -211,6 +221,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -225,6 +236,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   OR?: Prisma.TenantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
+  type?: Prisma.EnumType_ResponsibleWithAggregatesFilter<"Tenant"> | $Enums.Type_Responsible
   name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   size?: Prisma.EnumSizeWithAggregatesFilter<"Tenant"> | $Enums.Size
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
@@ -233,6 +245,7 @@ export type TenantScalarWhereWithAggregatesInput = {
 
 export type TenantCreateInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -243,6 +256,7 @@ export type TenantCreateInput = {
 
 export type TenantUncheckedCreateInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -253,6 +267,7 @@ export type TenantUncheckedCreateInput = {
 
 export type TenantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -263,6 +278,7 @@ export type TenantUpdateInput = {
 
 export type TenantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -273,6 +289,7 @@ export type TenantUncheckedUpdateInput = {
 
 export type TenantCreateManyInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -281,6 +298,7 @@ export type TenantCreateManyInput = {
 
 export type TenantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -289,6 +307,7 @@ export type TenantUpdateManyMutationInput = {
 
 export type TenantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -302,6 +321,7 @@ export type TenantScalarRelationFilter = {
 
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -310,6 +330,7 @@ export type TenantCountOrderByAggregateInput = {
 
 export type TenantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -318,6 +339,7 @@ export type TenantMaxOrderByAggregateInput = {
 
 export type TenantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -336,6 +358,10 @@ export type TenantUpdateOneRequiredWithoutResponsibleNestedInput = {
   upsert?: Prisma.TenantUpsertWithoutResponsibleInput
   connect?: Prisma.TenantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutResponsibleInput, Prisma.TenantUpdateWithoutResponsibleInput>, Prisma.TenantUncheckedUpdateWithoutResponsibleInput>
+}
+
+export type EnumType_ResponsibleFieldUpdateOperationsInput = {
+  set?: $Enums.Type_Responsible
 }
 
 export type EnumSizeFieldUpdateOperationsInput = {
@@ -358,6 +384,7 @@ export type TenantUpdateOneRequiredWithoutUserNestedInput = {
 
 export type TenantCreateWithoutResponsibleInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -367,6 +394,7 @@ export type TenantCreateWithoutResponsibleInput = {
 
 export type TenantUncheckedCreateWithoutResponsibleInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -392,6 +420,7 @@ export type TenantUpdateToOneWithWhereWithoutResponsibleInput = {
 
 export type TenantUpdateWithoutResponsibleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,6 +430,7 @@ export type TenantUpdateWithoutResponsibleInput = {
 
 export type TenantUncheckedUpdateWithoutResponsibleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -410,6 +440,7 @@ export type TenantUncheckedUpdateWithoutResponsibleInput = {
 
 export type TenantCreateWithoutUserInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -419,6 +450,7 @@ export type TenantCreateWithoutUserInput = {
 
 export type TenantUncheckedCreateWithoutUserInput = {
   id?: string
+  type: $Enums.Type_Responsible
   name: string
   size?: $Enums.Size
   createdAt?: Date | string
@@ -444,6 +476,7 @@ export type TenantUpdateToOneWithWhereWithoutUserInput = {
 
 export type TenantUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -453,6 +486,7 @@ export type TenantUpdateWithoutUserInput = {
 
 export type TenantUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -493,6 +527,7 @@ export type TenantCountOutputTypeCountUserArgs<ExtArgs extends runtime.Types.Ext
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   name?: boolean
   size?: boolean
   createdAt?: boolean
@@ -504,6 +539,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   name?: boolean
   size?: boolean
   createdAt?: boolean
@@ -512,6 +548,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   name?: boolean
   size?: boolean
   createdAt?: boolean
@@ -520,13 +557,14 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type TenantSelectScalar = {
   id?: boolean
+  type?: boolean
   name?: boolean
   size?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "size" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "name" | "size" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   responsible?: boolean | Prisma.Tenant$responsibleArgs<ExtArgs>
   user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
@@ -543,6 +581,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    type: $Enums.Type_Responsible
     name: string
     size: $Enums.Size
     createdAt: Date
@@ -973,6 +1012,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface TenantFieldRefs {
   readonly id: Prisma.FieldRef<"Tenant", 'String'>
+  readonly type: Prisma.FieldRef<"Tenant", 'Type_Responsible'>
   readonly name: Prisma.FieldRef<"Tenant", 'String'>
   readonly size: Prisma.FieldRef<"Tenant", 'Size'>
   readonly createdAt: Prisma.FieldRef<"Tenant", 'DateTime'>

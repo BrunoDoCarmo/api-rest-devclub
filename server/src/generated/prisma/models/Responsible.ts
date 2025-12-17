@@ -26,7 +26,6 @@ export type AggregateResponsible = {
 
 export type ResponsibleMinAggregateOutputType = {
   id: string | null
-  type: $Enums.Type_Responsible | null
   name: string | null
   cpf: string | null
   cnpj: string | null
@@ -50,7 +49,6 @@ export type ResponsibleMinAggregateOutputType = {
 
 export type ResponsibleMaxAggregateOutputType = {
   id: string | null
-  type: $Enums.Type_Responsible | null
   name: string | null
   cpf: string | null
   cnpj: string | null
@@ -74,7 +72,6 @@ export type ResponsibleMaxAggregateOutputType = {
 
 export type ResponsibleCountAggregateOutputType = {
   id: number
-  type: number
   name: number
   cpf: number
   cnpj: number
@@ -100,7 +97,6 @@ export type ResponsibleCountAggregateOutputType = {
 
 export type ResponsibleMinAggregateInputType = {
   id?: true
-  type?: true
   name?: true
   cpf?: true
   cnpj?: true
@@ -124,7 +120,6 @@ export type ResponsibleMinAggregateInputType = {
 
 export type ResponsibleMaxAggregateInputType = {
   id?: true
-  type?: true
   name?: true
   cpf?: true
   cnpj?: true
@@ -148,7 +143,6 @@ export type ResponsibleMaxAggregateInputType = {
 
 export type ResponsibleCountAggregateInputType = {
   id?: true
-  type?: true
   name?: true
   cpf?: true
   cnpj?: true
@@ -245,7 +239,6 @@ export type ResponsibleGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type ResponsibleGroupByOutputType = {
   id: string
-  type: $Enums.Type_Responsible
   name: string
   cpf: string | null
   cnpj: string | null
@@ -290,7 +283,6 @@ export type ResponsibleWhereInput = {
   OR?: Prisma.ResponsibleWhereInput[]
   NOT?: Prisma.ResponsibleWhereInput | Prisma.ResponsibleWhereInput[]
   id?: Prisma.StringFilter<"Responsible"> | string
-  type?: Prisma.EnumType_ResponsibleFilter<"Responsible"> | $Enums.Type_Responsible
   name?: Prisma.StringFilter<"Responsible"> | string
   cpf?: Prisma.StringNullableFilter<"Responsible"> | string | null
   cnpj?: Prisma.StringNullableFilter<"Responsible"> | string | null
@@ -318,7 +310,6 @@ export type ResponsibleWhereInput = {
 
 export type ResponsibleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   cpf?: Prisma.SortOrderInput | Prisma.SortOrder
   cnpj?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -352,7 +343,6 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ResponsibleWhereInput | Prisma.ResponsibleWhereInput[]
   OR?: Prisma.ResponsibleWhereInput[]
   NOT?: Prisma.ResponsibleWhereInput | Prisma.ResponsibleWhereInput[]
-  type?: Prisma.EnumType_ResponsibleFilter<"Responsible"> | $Enums.Type_Responsible
   name?: Prisma.StringFilter<"Responsible"> | string
   public_place?: Prisma.StringFilter<"Responsible"> | string
   number?: Prisma.StringFilter<"Responsible"> | string
@@ -377,7 +367,6 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
 
 export type ResponsibleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   cpf?: Prisma.SortOrderInput | Prisma.SortOrder
   cnpj?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -407,7 +396,6 @@ export type ResponsibleScalarWhereWithAggregatesInput = {
   OR?: Prisma.ResponsibleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ResponsibleScalarWhereWithAggregatesInput | Prisma.ResponsibleScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Responsible"> | string
-  type?: Prisma.EnumType_ResponsibleWithAggregatesFilter<"Responsible"> | $Enums.Type_Responsible
   name?: Prisma.StringWithAggregatesFilter<"Responsible"> | string
   cpf?: Prisma.StringNullableWithAggregatesFilter<"Responsible"> | string | null
   cnpj?: Prisma.StringNullableWithAggregatesFilter<"Responsible"> | string | null
@@ -431,7 +419,6 @@ export type ResponsibleScalarWhereWithAggregatesInput = {
 
 export type ResponsibleCreateInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -458,7 +445,6 @@ export type ResponsibleCreateInput = {
 
 export type ResponsibleUncheckedCreateInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -485,7 +471,6 @@ export type ResponsibleUncheckedCreateInput = {
 
 export type ResponsibleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -512,7 +497,6 @@ export type ResponsibleUpdateInput = {
 
 export type ResponsibleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -539,7 +523,6 @@ export type ResponsibleUncheckedUpdateInput = {
 
 export type ResponsibleCreateManyInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -563,7 +546,6 @@ export type ResponsibleCreateManyInput = {
 
 export type ResponsibleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -586,7 +568,6 @@ export type ResponsibleUpdateManyMutationInput = {
 
 export type ResponsibleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -610,7 +591,6 @@ export type ResponsibleUncheckedUpdateManyInput = {
 
 export type ResponsibleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
@@ -634,7 +614,6 @@ export type ResponsibleCountOrderByAggregateInput = {
 
 export type ResponsibleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
@@ -658,7 +637,6 @@ export type ResponsibleMaxOrderByAggregateInput = {
 
 export type ResponsibleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   cpf?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
@@ -692,10 +670,6 @@ export type ResponsibleScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type EnumType_ResponsibleFieldUpdateOperationsInput = {
-  set?: $Enums.Type_Responsible
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -786,7 +760,6 @@ export type ResponsibleUpdateOneRequiredWithoutCustomersNestedInput = {
 
 export type ResponsibleCreateWithoutTenantInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -812,7 +785,6 @@ export type ResponsibleCreateWithoutTenantInput = {
 
 export type ResponsibleUncheckedCreateWithoutTenantInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -854,7 +826,6 @@ export type ResponsibleUpdateToOneWithWhereWithoutTenantInput = {
 
 export type ResponsibleUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -880,7 +851,6 @@ export type ResponsibleUpdateWithoutTenantInput = {
 
 export type ResponsibleUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -906,7 +876,6 @@ export type ResponsibleUncheckedUpdateWithoutTenantInput = {
 
 export type ResponsibleCreateWithoutCompanies_dataInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -932,7 +901,6 @@ export type ResponsibleCreateWithoutCompanies_dataInput = {
 
 export type ResponsibleUncheckedCreateWithoutCompanies_dataInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -974,7 +942,6 @@ export type ResponsibleUpdateToOneWithWhereWithoutCompanies_dataInput = {
 
 export type ResponsibleUpdateWithoutCompanies_dataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1000,7 +967,6 @@ export type ResponsibleUpdateWithoutCompanies_dataInput = {
 
 export type ResponsibleUncheckedUpdateWithoutCompanies_dataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1026,7 +992,6 @@ export type ResponsibleUncheckedUpdateWithoutCompanies_dataInput = {
 
 export type ResponsibleCreateWithoutUsersInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -1052,7 +1017,6 @@ export type ResponsibleCreateWithoutUsersInput = {
 
 export type ResponsibleUncheckedCreateWithoutUsersInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -1094,7 +1058,6 @@ export type ResponsibleUpdateToOneWithWhereWithoutUsersInput = {
 
 export type ResponsibleUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1120,7 +1083,6 @@ export type ResponsibleUpdateWithoutUsersInput = {
 
 export type ResponsibleUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1146,7 +1108,6 @@ export type ResponsibleUncheckedUpdateWithoutUsersInput = {
 
 export type ResponsibleCreateWithoutCustomersInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -1172,7 +1133,6 @@ export type ResponsibleCreateWithoutCustomersInput = {
 
 export type ResponsibleUncheckedCreateWithoutCustomersInput = {
   id?: string
-  type: $Enums.Type_Responsible
   name: string
   cpf?: string | null
   cnpj?: string | null
@@ -1214,7 +1174,6 @@ export type ResponsibleUpdateToOneWithWhereWithoutCustomersInput = {
 
 export type ResponsibleUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1240,7 +1199,6 @@ export type ResponsibleUpdateWithoutCustomersInput = {
 
 export type ResponsibleUncheckedUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1315,7 +1273,6 @@ export type ResponsibleCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Typ
 
 export type ResponsibleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
   name?: boolean
   cpf?: boolean
   cnpj?: boolean
@@ -1344,7 +1301,6 @@ export type ResponsibleSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ResponsibleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
   name?: boolean
   cpf?: boolean
   cnpj?: boolean
@@ -1369,7 +1325,6 @@ export type ResponsibleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type ResponsibleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
   name?: boolean
   cpf?: boolean
   cnpj?: boolean
@@ -1394,7 +1349,6 @@ export type ResponsibleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type ResponsibleSelectScalar = {
   id?: boolean
-  type?: boolean
   name?: boolean
   cpf?: boolean
   cnpj?: boolean
@@ -1416,7 +1370,7 @@ export type ResponsibleSelectScalar = {
   tenantId?: boolean
 }
 
-export type ResponsibleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "name" | "cpf" | "cnpj" | "public_place" | "number" | "neighborhood" | "complement" | "cep" | "city" | "uf" | "telephone1" | "telephone2" | "cell_phone1" | "cell_phone2" | "email" | "state" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["responsible"]>
+export type ResponsibleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "cpf" | "cnpj" | "public_place" | "number" | "neighborhood" | "complement" | "cep" | "city" | "uf" | "telephone1" | "telephone2" | "cell_phone1" | "cell_phone2" | "email" | "state" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["responsible"]>
 export type ResponsibleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   companies_data?: boolean | Prisma.Responsible$companies_dataArgs<ExtArgs>
@@ -1441,7 +1395,6 @@ export type $ResponsiblePayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    type: $Enums.Type_Responsible
     name: string
     cpf: string | null
     cnpj: string | null
@@ -1889,7 +1842,6 @@ export interface Prisma__ResponsibleClient<T, Null = never, ExtArgs extends runt
  */
 export interface ResponsibleFieldRefs {
   readonly id: Prisma.FieldRef<"Responsible", 'String'>
-  readonly type: Prisma.FieldRef<"Responsible", 'Type_Responsible'>
   readonly name: Prisma.FieldRef<"Responsible", 'String'>
   readonly cpf: Prisma.FieldRef<"Responsible", 'String'>
   readonly cnpj: Prisma.FieldRef<"Responsible", 'String'>

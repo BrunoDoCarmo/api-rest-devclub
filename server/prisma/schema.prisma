@@ -8,30 +8,29 @@ datasource db {
 }
 
 model Responsible {
-  id             String           @id @default(uuid())
-  type           Type_Responsible
-  name           String //NOME
-  cpf            String?          @unique
-  cnpj           String?          @unique
-  public_place   String //LOGRADOURO
-  number         String //NUMERO
-  neighborhood   String //BAIRRO
-  complement     String? //COMPLEMENTO
-  cep            String
-  city           String //CIDADE
-  uf             String
-  telephone1     String? //TELEFONE1
-  telephone2     String? //TELEFONE2
-  cell_phone1    String //CELULAR1
-  cell_phone2    String? //CELULAR2
-  email          String
-  state          State            @default(ACTIVE) //ESTADO
-  createdAt      DateTime         @default(now()) //DATA CRIACAO
-  updatedAt      DateTime         @updatedAt //DATA ALTERACAO
+  id           String   @id @default(uuid())
+  name         String //NOME
+  cpf          String?  @unique
+  cnpj         String?  @unique
+  public_place String //LOGRADOURO
+  number       String //NUMERO
+  neighborhood String //BAIRRO
+  complement   String? //COMPLEMENTO
+  cep          String
+  city         String //CIDADE
+  uf           String
+  telephone1   String? //TELEFONE1
+  telephone2   String? //TELEFONE2
+  cell_phone1  String //CELULAR1
+  cell_phone2  String? //CELULAR2
+  email        String
+  state        State    @default(ACTIVE) //ESTADO
+  createdAt    DateTime @default(now()) //DATA CRIACAO
+  updatedAt    DateTime @updatedAt //DATA ALTERACAO
 
-  tenant         Tenant           @relation(fields: [tenantId], references: [id])
-  tenantId       String           @unique
-  
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId String @unique
+
   companies_data Company_Data[]
   customers      Customer[]
   users          User[]
@@ -40,11 +39,12 @@ model Responsible {
 }
 
 model Tenant {
-  id          String       @id @default(uuid())
-  name        String //NOME
-  size        Size         @default(SMALL) //TAMANHO
-  createdAt   DateTime     @default(now()) //DATA CRIACAO
-  updatedAt   DateTime     @updatedAt //DATA ALTERACAO
+  id        String           @id @default(uuid())
+  type      Type_Responsible
+  name      String //NOME
+  size      Size             @default(SMALL) //TAMANHO
+  createdAt DateTime         @default(now()) //DATA CRIACAO
+  updatedAt DateTime         @updatedAt //DATA ALTERACAO
 
   responsible Responsible? //RESPONSAVEL
   user        User[] //USUARIO
@@ -53,28 +53,28 @@ model Tenant {
 }
 
 model Company_Data {
-  id            String      @id @default(uuid())
-  company_name  String //RAZAO SOCIAL
-  fantasy       String //FANTASIA
-  cnpj          String      @unique
-  ie            String?
-  public_place  String //LOGRADOURO
-  number        String //NUMERO
-  neighborhood  String //BAIRRO
-  complement    String? //COMPLEMENTO
-  cep           String
-  city          String //CIDADE
-  uf            String
-  telephone1    String? //TELEFONE1
-  telephone2    String? //TELEFONE2
-  cell_phone1   String //CELULAR1
-  cell_phone2   String? //CELULAR2
-  email         String
-  site          String?
-  state         State       @default(ACTIVE) //ESTADO
-  createdAt     DateTime    @default(now()) //DATA CRIACAO
-  updatedAt     DateTime    @updatedAt //DATA ALTERACAO
-  
+  id           String   @id @default(uuid())
+  company_name String //RAZAO SOCIAL
+  fantasy      String //FANTASIA
+  cnpj         String   @unique
+  ie           String?
+  public_place String //LOGRADOURO
+  number       String //NUMERO
+  neighborhood String //BAIRRO
+  complement   String? //COMPLEMENTO
+  cep          String
+  city         String //CIDADE
+  uf           String
+  telephone1   String? //TELEFONE1
+  telephone2   String? //TELEFONE2
+  cell_phone1  String //CELULAR1
+  cell_phone2  String? //CELULAR2
+  email        String
+  site         String?
+  state        State    @default(ACTIVE) //ESTADO
+  createdAt    DateTime @default(now()) //DATA CRIACAO
+  updatedAt    DateTime @updatedAt //DATA ALTERACAO
+
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
 
@@ -82,19 +82,19 @@ model Company_Data {
 }
 
 model User {
-  id            String       @id @default(uuid())
-  name          String //NOME
-  email         String       @unique
-  username      String       @unique //NOME DE USUARIO
-  password      String //SENHA
-  role          UserRole     @default(USER)
-  state         State        @default(ACTIVE) //ESTADO
-  createdAt     DateTime     @default(now()) //DATA CRIACAO
-  updatedAt     DateTime     @updatedAt //DATA ALTERACAO
-  
-  tenant        Tenant       @relation(fields: [tenantId], references: [id])
-  tenantId      String
-  
+  id        String   @id @default(uuid())
+  name      String //NOME
+  email     String   @unique
+  username  String   @unique //NOME DE USUARIO
+  password  String //SENHA
+  role      UserRole @default(USER)
+  state     State    @default(ACTIVE) //ESTADO
+  createdAt DateTime @default(now()) //DATA CRIACAO
+  updatedAt DateTime @updatedAt //DATA ALTERACAO
+
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId String
+
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
 
@@ -102,29 +102,29 @@ model User {
 }
 
 model Customer {
-  id            String      @id @default(uuid())
-  name          String //NOME
-  cpf           String?     @unique
-  cnpj          String?     @unique
-  ie            String?
-  regime        Regime      @default(ICMS_TAXPAYER)
-  public_place  String //LOGRADOURO
-  number        String //NUMERO
-  neighborhood  String //BAIRRO
-  complement    String? //COMPLEMENTO
-  cep           String
-  city          String //CIDADE
-  uf            String
-  telephone1    String? //TELEFONE1
-  telephone2    String? //TELEFONE2
-  cell_phone1   String //CELULAR1
-  cell_phone2   String? //CELULAR2
-  email         String
-  contact       String? //CONTATO
-  state         State       @default(ACTIVE) //ESTADO
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
+  id           String   @id @default(uuid())
+  name         String //NOME
+  cpf          String?  @unique
+  cnpj         String?  @unique
+  ie           String?
+  regime       Regime   @default(ICMS_TAXPAYER)
+  public_place String //LOGRADOURO
+  number       String //NUMERO
+  neighborhood String //BAIRRO
+  complement   String? //COMPLEMENTO
+  cep          String
+  city         String //CIDADE
+  uf           String
+  telephone1   String? //TELEFONE1
+  telephone2   String? //TELEFONE2
+  cell_phone1  String //CELULAR1
+  cell_phone2  String? //CELULAR2
+  email        String
+  contact      String? //CONTATO
+  state        State    @default(ACTIVE) //ESTADO
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
   responsible   Responsible @relation(fields: [responsibleId], references: [id])
   responsibleId String
 

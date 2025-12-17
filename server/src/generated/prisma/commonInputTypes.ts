@@ -29,13 +29,6 @@ export type StringFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
 }
 
-export type EnumType_ResponsibleFilter<$PrismaModel = never> = {
-  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
-  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel> | $Enums.Type_Responsible
-}
-
 export type StringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -92,16 +85,6 @@ export type StringWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringFilter<$PrismaModel>
 }
 
-export type EnumType_ResponsibleWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
-  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel> | $Enums.Type_Responsible
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
-}
-
 export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -144,11 +127,28 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type EnumType_ResponsibleFilter<$PrismaModel = never> = {
+  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
+  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel> | $Enums.Type_Responsible
+}
+
 export type EnumSizeFilter<$PrismaModel = never> = {
   equals?: $Enums.Size | Prisma.EnumSizeFieldRefInput<$PrismaModel>
   in?: $Enums.Size[] | Prisma.ListEnumSizeFieldRefInput<$PrismaModel>
   notIn?: $Enums.Size[] | Prisma.ListEnumSizeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumSizeFilter<$PrismaModel> | $Enums.Size
+}
+
+export type EnumType_ResponsibleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
+  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel> | $Enums.Type_Responsible
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
 }
 
 export type EnumSizeWithAggregatesFilter<$PrismaModel = never> = {
@@ -207,13 +207,6 @@ export type NestedStringFilter<$PrismaModel = never> = {
   startsWith?: string | Prisma.StringFieldRefInput<$PrismaModel>
   endsWith?: string | Prisma.StringFieldRefInput<$PrismaModel>
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
-}
-
-export type NestedEnumType_ResponsibleFilter<$PrismaModel = never> = {
-  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
-  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel> | $Enums.Type_Responsible
 }
 
 export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -276,16 +269,6 @@ export type NestedIntFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntFilter<$PrismaModel> | number
 }
 
-export type NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
-  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel> | $Enums.Type_Responsible
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
-}
-
 export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -338,11 +321,28 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type NestedEnumType_ResponsibleFilter<$PrismaModel = never> = {
+  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
+  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel> | $Enums.Type_Responsible
+}
+
 export type NestedEnumSizeFilter<$PrismaModel = never> = {
   equals?: $Enums.Size | Prisma.EnumSizeFieldRefInput<$PrismaModel>
   in?: $Enums.Size[] | Prisma.ListEnumSizeFieldRefInput<$PrismaModel>
   notIn?: $Enums.Size[] | Prisma.ListEnumSizeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumSizeFilter<$PrismaModel> | $Enums.Size
+}
+
+export type NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Type_Responsible | Prisma.EnumType_ResponsibleFieldRefInput<$PrismaModel>
+  in?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Type_Responsible[] | Prisma.ListEnumType_ResponsibleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumType_ResponsibleWithAggregatesFilter<$PrismaModel> | $Enums.Type_Responsible
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumType_ResponsibleFilter<$PrismaModel>
 }
 
 export type NestedEnumSizeWithAggregatesFilter<$PrismaModel = never> = {

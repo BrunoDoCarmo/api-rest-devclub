@@ -76,7 +76,6 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ResponsibleScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   name: 'name',
   cpf: 'cpf',
   cnpj: 'cnpj',
@@ -103,6 +102,7 @@ export type ResponsibleScalarFieldEnum = (typeof ResponsibleScalarFieldEnum)[key
 
 export const TenantScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   name: 'name',
   size: 'size',
   createdAt: 'createdAt',
