@@ -7,6 +7,20 @@ datasource db {
   provider = "postgresql"
 }
 
+model Tenant {
+  id        String           @id @default(uuid())
+  type      Type_Responsible
+  name      String //NOME
+  size      Size             @default(SMALL) //TAMANHO
+  createdAt DateTime         @default(now()) //DATA CRIACAO
+  updatedAt DateTime         @updatedAt //DATA ALTERACAO
+
+  responsible Responsible? //RESPONSAVEL
+  user        User[] //USUARIO
+
+  @@map("tenant")
+}
+
 model Responsible {
   id           String   @id @default(uuid())
   name         String //NOME
@@ -35,21 +49,50 @@ model Responsible {
   customers      Customer[]
   users          User[]
 
+  emailVerified      Boolean             @default(false)
+  emailVerifications EmailVerification[]
+
   @@map("responsible")
 }
 
-model Tenant {
-  id        String           @id @default(uuid())
-  type      Type_Responsible
+model User {
+  id        String   @id @default(uuid())
   name      String //NOME
-  size      Size             @default(SMALL) //TAMANHO
-  createdAt DateTime         @default(now()) //DATA CRIACAO
-  updatedAt DateTime         @updatedAt //DATA ALTERACAO
+  email     String   @unique
+  username  String   @unique //NOME DE USUARIO
+  password  String //SENHA
+  role      UserRole @default(USER)
+  state     State    @default(ACTIVE) //ESTADO
+  createdAt DateTime @default(now()) //DATA CRIACAO
+  updatedAt DateTime @updatedAt //DATA ALTERACAO
 
-  responsible Responsible? //RESPONSAVEL
-  user        User[] //USUARIO
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId String
 
-  @@map("tenant")
+  responsible   Responsible @relation(fields: [responsibleId], references: [id])
+  responsibleId String
+
+  emailVerified      Boolean             @default(false)
+  emailVerifications EmailVerification[]
+
+  @@map("user")
+}
+
+model EmailVerification {
+  id        String                @id @default(uuid())
+  email     String
+  tokenHash String
+  type      EmailVerificationType
+  expiresAt DateTime
+  verified  Boolean               @default(false)
+
+  userId        String?
+  responsibleId String?
+
+  user        User?        @relation(fields: [userId], references: [id])
+  responsible Responsible? @relation(fields: [responsibleId], references: [id])
+
+  createdAt DateTime @default(now())
 }
 
 model Company_Data {
@@ -79,26 +122,6 @@ model Company_Data {
   responsibleId String
 
   @@map("company_data")
-}
-
-model User {
-  id        String   @id @default(uuid())
-  name      String //NOME
-  email     String   @unique
-  username  String   @unique //NOME DE USUARIO
-  password  String //SENHA
-  role      UserRole @default(USER)
-  state     State    @default(ACTIVE) //ESTADO
-  createdAt DateTime @default(now()) //DATA CRIACAO
-  updatedAt DateTime @updatedAt //DATA ALTERACAO
-
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  tenantId String
-
-  responsible   Responsible @relation(fields: [responsibleId], references: [id])
-  responsibleId String
-
-  @@map("user")
 }
 
 model Customer {
@@ -145,6 +168,11 @@ enum Size {
 enum UserRole {
   ADMIN
   USER
+}
+
+enum EmailVerificationType {
+  USER
+  RESPONSIBLE
 }
 
 enum State {
