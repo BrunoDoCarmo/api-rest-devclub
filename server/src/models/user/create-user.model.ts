@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 const RoleEnum = ["ADMIN", "USER"] as const;
 

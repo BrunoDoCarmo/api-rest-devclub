@@ -1,4 +1,5 @@
 import z from "zod";
+import { isValidCNPJ, isValidCPF } from "../../utils/document";
 
 export const createResponsibleModel = z.object({
     name: z.string({
@@ -39,5 +40,41 @@ export const createResponsibleModel = z.object({
 
     email: z.string(),
 })
+  .superRefine((data, ctx) => {
+    const cpf = data.cpf?.replace(/\D/g, "") || null;
+    const cnpj = data.cnpj?.replace(/\D/g, "") || null;
+
+    if (!cpf && !cnpj) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["cpf"],
+        message: "CPF ou CNPJ é obrigatório",
+      });
+    }
+
+    if (cpf && cnpj) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["cpf"],
+        message: "Informe apenas CPF ou apenas CNPJ",
+      });
+    }
+
+    if (cpf && !isValidCPF(cpf)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["cpf"],
+        message: "CPF inválido",
+      });
+    }
+
+    if (cnpj && !isValidCNPJ(cnpj)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["cnpj"],
+        message: "CNPJ inválido",
+      });
+    }
+  });
 
 export type CreateResponsibleModel = z.infer<typeof createResponsibleModel>

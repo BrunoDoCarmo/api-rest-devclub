@@ -1,7 +1,7 @@
 import { Router } from "express";
-import tenantresponsibleRoutes from './responsible.routes';
+import tenantresponsibleUserRoutes from './tenant-responsible-user.responsible.routes';
 
 const router = Router();
-router.use('/signup', tenantresponsibleRoutes);
+router.use('/signup', tenantresponsibleUserRoutes);
 
 export default router;
