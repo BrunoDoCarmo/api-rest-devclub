@@ -34,6 +34,14 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const EmailVerificationType = {
+  USER: 'USER',
+  RESPONSIBLE: 'RESPONSIBLE'
+} as const
+
+export type EmailVerificationType = (typeof EmailVerificationType)[keyof typeof EmailVerificationType]
+
+
 export const State = {
   ACTIVE: 'ACTIVE',
   DISABLED: 'DISABLED',

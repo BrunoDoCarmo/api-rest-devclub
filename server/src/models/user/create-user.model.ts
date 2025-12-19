@@ -6,9 +6,9 @@ export const createUserModel = z.object({
   name: z.string({
     error: "Nome do usuário é obrigatório",
   }),
-  email: z.string({
-    error: "Email do usuário é obrigatório",
-  }),
+  email: z.email({
+    message: "Formato de e-mail inválido"
+  }).min(1, "E-mail é obrigatório"),
   username: z.string({
     error: "Login do usuário é obrigatório",
   }),

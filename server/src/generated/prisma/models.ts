@@ -8,9 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Responsible.js'
 export type * from './models/Tenant.js'
-export type * from './models/Company_Data.js'
+export type * from './models/Responsible.js'
 export type * from './models/User.js'
+export type * from './models/EmailVerification.js'
+export type * from './models/Company_Data.js'
 export type * from './models/Customer.js'
 export type * from './commonInputTypes.js'

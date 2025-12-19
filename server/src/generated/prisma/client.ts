@@ -29,36 +29,41 @@ export * from "./enums.js"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Responsibles
- * const responsibles = await prisma.responsible.findMany()
+ * // Fetch zero or more Tenants
+ * const tenants = await prisma.tenant.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
 /**
- * Model Responsible
- * 
- */
-export type Responsible = Prisma.ResponsibleModel
-/**
  * Model Tenant
  * 
  */
 export type Tenant = Prisma.TenantModel
 /**
- * Model Company_Data
+ * Model Responsible
  * 
  */
-export type Company_Data = Prisma.Company_DataModel
+export type Responsible = Prisma.ResponsibleModel
 /**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model EmailVerification
+ * 
+ */
+export type EmailVerification = Prisma.EmailVerificationModel
+/**
+ * Model Company_Data
+ * 
+ */
+export type Company_Data = Prisma.Company_DataModel
 /**
  * Model Customer
  * 

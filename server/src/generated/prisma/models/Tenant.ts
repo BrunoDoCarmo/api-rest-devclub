@@ -314,11 +314,6 @@ export type TenantUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type TenantScalarRelationFilter = {
-  is?: Prisma.TenantWhereInput
-  isNot?: Prisma.TenantWhereInput
-}
-
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -346,6 +341,27 @@ export type TenantMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type TenantScalarRelationFilter = {
+  is?: Prisma.TenantWhereInput
+  isNot?: Prisma.TenantWhereInput
+}
+
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type EnumType_ResponsibleFieldUpdateOperationsInput = {
+  set?: $Enums.Type_Responsible
+}
+
+export type EnumSizeFieldUpdateOperationsInput = {
+  set?: $Enums.Size
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type TenantCreateNestedOneWithoutResponsibleInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutResponsibleInput, Prisma.TenantUncheckedCreateWithoutResponsibleInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutResponsibleInput
@@ -358,14 +374,6 @@ export type TenantUpdateOneRequiredWithoutResponsibleNestedInput = {
   upsert?: Prisma.TenantUpsertWithoutResponsibleInput
   connect?: Prisma.TenantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutResponsibleInput, Prisma.TenantUpdateWithoutResponsibleInput>, Prisma.TenantUncheckedUpdateWithoutResponsibleInput>
-}
-
-export type EnumType_ResponsibleFieldUpdateOperationsInput = {
-  set?: $Enums.Type_Responsible
-}
-
-export type EnumSizeFieldUpdateOperationsInput = {
-  set?: $Enums.Size
 }
 
 export type TenantCreateNestedOneWithoutUserInput = {

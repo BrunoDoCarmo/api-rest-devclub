@@ -37,7 +37,7 @@ model Responsible {
   telephone2   String? //TELEFONE2
   cell_phone1  String //CELULAR1
   cell_phone2  String? //CELULAR2
-  email        String
+  email        String @unique
   state        State    @default(ACTIVE) //ESTADO
   createdAt    DateTime @default(now()) //DATA CRIACAO
   updatedAt    DateTime @updatedAt //DATA ALTERACAO
@@ -48,9 +48,6 @@ model Responsible {
   companies_data Company_Data[]
   customers      Customer[]
   users          User[]
-
-  emailVerified      Boolean             @default(false)
-  emailVerifications EmailVerification[]
 
   @@map("responsible")
 }
@@ -80,19 +77,19 @@ model User {
 
 model EmailVerification {
   id        String                @id @default(uuid())
-  email     String
+  email     String @unique
   tokenHash String
   type      EmailVerificationType
   expiresAt DateTime
   verified  Boolean               @default(false)
 
-  userId        String?
-  responsibleId String?
+  userId String?
 
-  user        User?        @relation(fields: [userId], references: [id])
-  responsible Responsible? @relation(fields: [responsibleId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@map("emailverification")
 }
 
 model Company_Data {
@@ -172,7 +169,6 @@ enum UserRole {
 
 enum EmailVerificationType {
   USER
-  RESPONSIBLE
 }
 
 enum State {

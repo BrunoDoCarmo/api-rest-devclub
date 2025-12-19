@@ -38,7 +38,9 @@ export const createResponsibleModel = z.object({
     }),
     cell_phone2: z.string().optional().nullable(),
 
-    email: z.string(),
+    email: z.email({
+      message: "Formato de e-mail inválido"
+    }).min(1, "E-mail é obrigatório"),
 })
   .superRefine((data, ctx) => {
     const cpf = data.cpf?.replace(/\D/g, "") || null;

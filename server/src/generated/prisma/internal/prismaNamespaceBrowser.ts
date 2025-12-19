@@ -51,10 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Responsible: 'Responsible',
   Tenant: 'Tenant',
-  Company_Data: 'Company_Data',
+  Responsible: 'Responsible',
   User: 'User',
+  EmailVerification: 'EmailVerification',
+  Company_Data: 'Company_Data',
   Customer: 'Customer'
 } as const
 
@@ -72,6 +73,18 @@ export const TransactionIsolationLevel = {
 } as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const TenantScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  name: 'name',
+  size: 'size',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
 
 
 export const ResponsibleScalarFieldEnum = {
@@ -100,16 +113,36 @@ export const ResponsibleScalarFieldEnum = {
 export type ResponsibleScalarFieldEnum = (typeof ResponsibleScalarFieldEnum)[keyof typeof ResponsibleScalarFieldEnum]
 
 
-export const TenantScalarFieldEnum = {
+export const UserScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   name: 'name',
-  size: 'size',
+  email: 'email',
+  username: 'username',
+  password: 'password',
+  role: 'role',
+  state: 'state',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  tenantId: 'tenantId',
+  responsibleId: 'responsibleId',
+  emailVerified: 'emailVerified'
 } as const
 
-export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const EmailVerificationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  tokenHash: 'tokenHash',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  verified: 'verified',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailVerificationScalarFieldEnum = (typeof EmailVerificationScalarFieldEnum)[keyof typeof EmailVerificationScalarFieldEnum]
 
 
 export const Company_DataScalarFieldEnum = {
@@ -138,23 +171,6 @@ export const Company_DataScalarFieldEnum = {
 } as const
 
 export type Company_DataScalarFieldEnum = (typeof Company_DataScalarFieldEnum)[keyof typeof Company_DataScalarFieldEnum]
-
-
-export const UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  username: 'username',
-  password: 'password',
-  role: 'role',
-  state: 'state',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  tenantId: 'tenantId',
-  responsibleId: 'responsibleId'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {

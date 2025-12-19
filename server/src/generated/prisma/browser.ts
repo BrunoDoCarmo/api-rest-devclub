@@ -18,25 +18,30 @@ export { Prisma }
 export * as $Enums from './enums.js'
 export * from './enums.js';
 /**
- * Model Responsible
- * 
- */
-export type Responsible = Prisma.ResponsibleModel
-/**
  * Model Tenant
  * 
  */
 export type Tenant = Prisma.TenantModel
 /**
- * Model Company_Data
+ * Model Responsible
  * 
  */
-export type Company_Data = Prisma.Company_DataModel
+export type Responsible = Prisma.ResponsibleModel
 /**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model EmailVerification
+ * 
+ */
+export type EmailVerification = Prisma.EmailVerificationModel
+/**
+ * Model Company_Data
+ * 
+ */
+export type Company_Data = Prisma.Company_DataModel
 /**
  * Model Customer
  * 
