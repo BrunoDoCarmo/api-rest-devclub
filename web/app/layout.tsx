@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./_components/navbar";
-import { IdleTimer } from "./idLeTimer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,11 +33,6 @@ export default function RootLayout({
       >
         <Navbar />
         <div className="flex h-full flex-col md:overflow-hidden">
-          <IdleTimer />
-          {/* <div
-            className="fixed bottom-4 right-4 flex items-center gap-2 rounded-full px-4 py-2 text-xs font-mono text-white backdrop-blur-md border border-zinc-800 bg-zinc-900/80"
-          >
-          </div> */}
             {children}
         </div>
       </body>

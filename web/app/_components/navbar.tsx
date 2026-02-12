@@ -11,7 +11,7 @@ import { ChevronDown, KeyRound, LogInIcon, LogOut, User } from "lucide-react";
 import { Button } from "./ui/button";
 import Modal from "./modal";
 import { Loading } from "./loading";
-
+import IdleTimer from "./idLeTimer";
 interface CustomJwtPayload {
   name?: string;
   sub?: string;
@@ -149,12 +149,13 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b border-black bg-black backdrop-blur-md px-6 py-4">
+      <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-800 backdrop-blur-md px-6 py-0">
         <div className="mx-auto flex max-w-9xl items-center justify-between">
           {isLoggedIn ? (
-              <Link href="/dashboard" className="transition-opacity hover:opacity-80">
+              <div className="flex justify-center items-center flex-col gap-1 mt-1">
                 <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority />
-              </Link>
+                <IdleTimer />
+              </div>
             ) : (
               <Link href="/" className="transition-opacity hover:opacity-80">
                 <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority />
@@ -251,7 +252,7 @@ export function Navbar() {
             ) : (
               <Button
                 onClick={() => router.push("/login")}
-                className="group flex items-center gap-2 rounded-xl bg-green-600 px-6 py-2 font-bold text-white transition-all hover:bg-green-500"
+                className="group flex items-center gap-2 rounded-xl bg-green-600 px-6 py-2 font-bold text-white transition-all hover:bg-green-500 mt-1 mb-1"
               >
                 <LogInIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 Entrar

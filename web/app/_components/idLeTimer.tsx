@@ -3,12 +3,12 @@
 import { useEffect, useCallback, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
-import { formatTime } from "./utils/formatoHora";
+import { formatTime } from "../utils/formatoHora";
 
 const INACTIVITY_TIME = 4 * 60 * 1000; // 4 Minutos
 const ACTIVITY_KEY = "lastActivity";
 
-export function IdleTimer() {
+export default function IdleTimer() {
     const pathname = usePathname();
     const [remainingTime, setRemainingTime] = useState<number>(INACTIVITY_TIME);
 
@@ -32,7 +32,7 @@ export function IdleTimer() {
         const interval = setInterval(() => {
             const token = Cookies.get("token");
             if (!token) {
-                if (pathname !== "/login") window.location.href = "/login";
+                window.location.href = "/login";
                 return;
             } 
 
@@ -82,7 +82,8 @@ export function IdleTimer() {
     
     
     return (
-        <div className="fixed z-50 bottom-4 right-4 flex items-center gap-2 rounded-full px-4 py-2 text-xs font-mono text-white backdrop-blur-md border transition-colors duration-500 bg-zinc-900/80 border-zinc-800">
+        <div className="flex items-center gap-2 rounded-full px-1 py-1 text-[9px] font-mono 
+            text-white transition-colors duration-500">
             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"/>
             <span className="text-zinc-300">
                 Expira em: 
