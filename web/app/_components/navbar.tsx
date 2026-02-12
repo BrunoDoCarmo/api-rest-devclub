@@ -153,12 +153,12 @@ export function Navbar() {
         <div className="mx-auto flex max-w-9xl items-center justify-between">
           {isLoggedIn ? (
               <div className="flex justify-center items-center flex-col gap-1 mt-1">
-                <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority />
+                <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority style={{height: '30px', width: '130px'}}/>
                 <IdleTimer />
               </div>
             ) : (
               <Link href="/" className="transition-opacity hover:opacity-80">
-                <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority />
+                <Image src="/logo-light.svg" alt="Finance AI" width={130} height={30} priority style={{height: '30px', width: '130px'}}/>
               </Link>
             )
           }
