@@ -339,6 +339,7 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   cpf?: string
   cnpj?: string
+  email?: string
   tenantId?: string
   AND?: Prisma.ResponsibleWhereInput | Prisma.ResponsibleWhereInput[]
   OR?: Prisma.ResponsibleWhereInput[]
@@ -355,7 +356,6 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
   telephone2?: Prisma.StringNullableFilter<"Responsible"> | string | null
   cell_phone1?: Prisma.StringFilter<"Responsible"> | string
   cell_phone2?: Prisma.StringNullableFilter<"Responsible"> | string | null
-  email?: Prisma.StringFilter<"Responsible"> | string
   state?: Prisma.EnumStateFilter<"Responsible"> | $Enums.State
   createdAt?: Prisma.DateTimeFilter<"Responsible"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Responsible"> | Date | string
@@ -363,7 +363,7 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
   companies_data?: Prisma.Company_DataListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
   users?: Prisma.UserListRelationFilter
-}, "id" | "cpf" | "cnpj" | "tenantId">
+}, "id" | "cpf" | "cnpj" | "email" | "tenantId">
 
 export type ResponsibleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -698,10 +698,6 @@ export type ResponsibleUncheckedUpdateOneWithoutTenantNestedInput = {
   delete?: Prisma.ResponsibleWhereInput | boolean
   connect?: Prisma.ResponsibleWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResponsibleUpdateToOneWithWhereWithoutTenantInput, Prisma.ResponsibleUpdateWithoutTenantInput>, Prisma.ResponsibleUncheckedUpdateWithoutTenantInput>
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type EnumStateFieldUpdateOperationsInput = {

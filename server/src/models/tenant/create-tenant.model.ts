@@ -11,7 +11,11 @@ export const createTenantModel = z.object({
       error: "Nome do tenant é obrigatório",
     }).min(2, "Nome deve ter ao menos 2 caracteres"),
 
-  size: z.enum(SizeEnum).optional().default("SMALL"),
+  size: z.enum(SizeEnum).optional(),
+  cnpj: z
+    .string({
+      error: "CNPJ do tenant é obrigatório",
+    })
 });
 
 export type CreateTenantModel = z.infer<typeof createTenantModel>;

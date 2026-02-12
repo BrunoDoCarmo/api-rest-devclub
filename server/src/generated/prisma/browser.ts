@@ -38,6 +38,11 @@ export type User = Prisma.UserModel
  */
 export type EmailVerification = Prisma.EmailVerificationModel
 /**
+ * Model NotificationEmail
+ * 
+ */
+export type NotificationEmail = Prisma.NotificationEmailModel
+/**
  * Model Company_Data
  * 
  */

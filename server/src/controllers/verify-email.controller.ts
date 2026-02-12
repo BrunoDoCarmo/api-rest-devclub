@@ -1,11 +1,12 @@
 import crypto from "crypto";
 import { prisma } from "../lib/prisma";
 import type { Request, Response } from "express";
+import { EmailVerificationType } from "../generated/prisma/enums";
 
 export async function verifyEmailController(req: Request, res: Response) {
   const { token, type } = req.query;
 
-  if (!token || !type) {
+  if (!token || !type ) {
     return res.status(400).json({ error: "Token inválido" });
   }
 
@@ -17,7 +18,7 @@ export async function verifyEmailController(req: Request, res: Response) {
   const verification = await prisma.emailVerification.findFirst({
     where: {
       tokenHash,
-      type: type === "user" ? "USER" : "RESPONSIBLE",
+      type: EmailVerificationType[type as keyof typeof EmailVerificationType],
       verified: false,
       expiresAt: { gt: new Date() },
     },
@@ -31,7 +32,7 @@ export async function verifyEmailController(req: Request, res: Response) {
     if (verification.userId) {
       await tx.user.update({
         where: { id: verification.userId },
-        data: { emailVerified: true },
+        data: { emailVerified: true, state: "ACTIVE" },
       });
     }
 

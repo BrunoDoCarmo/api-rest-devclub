@@ -8,6 +8,7 @@ export class TenantRepository {
         type: data.type ?? 'PHYSICAL',
         name: data.name,
         size: data.size ?? 'SMALL',
+        cnpj: data.cnpj,
       },
     });
   }

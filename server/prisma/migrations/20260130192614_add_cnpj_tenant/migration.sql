@@ -8,7 +8,7 @@ CREATE TYPE "Size" AS ENUM ('SMALL', 'MEDIUM', 'LARGE');
 CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
 
 -- CreateEnum
-CREATE TYPE "EmailVerificationType" AS ENUM ('USER', 'RESPONSIBLE');
+CREATE TYPE "EmailVerificationType" AS ENUM ('USER');
 
 -- CreateEnum
 CREATE TYPE "State" AS ENUM ('ACTIVE', 'DISABLED', 'DELETED');
@@ -21,7 +21,8 @@ CREATE TABLE "tenant" (
     "id" TEXT NOT NULL,
     "type" "Type_Responsible" NOT NULL,
     "name" TEXT NOT NULL,
-    "size" "Size" NOT NULL DEFAULT 'SMALL',
+    "size" "Size" NOT NULL,
+    "cnpj" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -50,7 +51,6 @@ CREATE TABLE "responsible" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "tenantId" TEXT NOT NULL,
-    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "responsible_pkey" PRIMARY KEY ("id")
 );
@@ -74,7 +74,7 @@ CREATE TABLE "user" (
 );
 
 -- CreateTable
-CREATE TABLE "emailVerification" (
+CREATE TABLE "emailverification" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "tokenHash" TEXT NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE "emailVerification" (
     "userId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "emailVerification_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "emailverification_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -145,10 +145,16 @@ CREATE TABLE "customer" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "tenant_cnpj_key" ON "tenant"("cnpj");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "responsible_cpf_key" ON "responsible"("cpf");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "responsible_cnpj_key" ON "responsible"("cnpj");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "responsible_email_key" ON "responsible"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "responsible_tenantId_key" ON "responsible"("tenantId");
@@ -158,6 +164,9 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "emailverification_email_key" ON "emailverification"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "company_data_cnpj_key" ON "company_data"("cnpj");
@@ -178,7 +187,7 @@ ALTER TABLE "user" ADD CONSTRAINT "user_tenantId_fkey" FOREIGN KEY ("tenantId") 
 ALTER TABLE "user" ADD CONSTRAINT "user_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "responsible"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "emailVerification" ADD CONSTRAINT "emailVerification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "emailverification" ADD CONSTRAINT "emailverification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "company_data" ADD CONSTRAINT "company_data_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "responsible"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

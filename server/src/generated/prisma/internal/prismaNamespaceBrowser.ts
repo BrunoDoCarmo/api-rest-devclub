@@ -55,6 +55,7 @@ export const ModelName = {
   Responsible: 'Responsible',
   User: 'User',
   EmailVerification: 'EmailVerification',
+  NotificationEmail: 'NotificationEmail',
   Company_Data: 'Company_Data',
   Customer: 'Customer'
 } as const
@@ -80,6 +81,7 @@ export const TenantScalarFieldEnum = {
   type: 'type',
   name: 'name',
   size: 'size',
+  cnpj: 'cnpj',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -143,6 +145,17 @@ export const EmailVerificationScalarFieldEnum = {
 } as const
 
 export type EmailVerificationScalarFieldEnum = (typeof EmailVerificationScalarFieldEnum)[keyof typeof EmailVerificationScalarFieldEnum]
+
+
+export const NotificationEmailScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  read: 'read',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationEmailScalarFieldEnum = (typeof NotificationEmailScalarFieldEnum)[keyof typeof NotificationEmailScalarFieldEnum]
 
 
 export const Company_DataScalarFieldEnum = {

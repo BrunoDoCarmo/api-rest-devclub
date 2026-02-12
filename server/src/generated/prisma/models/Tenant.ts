@@ -29,6 +29,7 @@ export type TenantMinAggregateOutputType = {
   type: $Enums.Type_Responsible | null
   name: string | null
   size: $Enums.Size | null
+  cnpj: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -38,6 +39,7 @@ export type TenantMaxAggregateOutputType = {
   type: $Enums.Type_Responsible | null
   name: string | null
   size: $Enums.Size | null
+  cnpj: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,6 +49,7 @@ export type TenantCountAggregateOutputType = {
   type: number
   name: number
   size: number
+  cnpj: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -58,6 +61,7 @@ export type TenantMinAggregateInputType = {
   type?: true
   name?: true
   size?: true
+  cnpj?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -67,6 +71,7 @@ export type TenantMaxAggregateInputType = {
   type?: true
   name?: true
   size?: true
+  cnpj?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,6 +81,7 @@ export type TenantCountAggregateInputType = {
   type?: true
   name?: true
   size?: true
+  cnpj?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +164,7 @@ export type TenantGroupByOutputType = {
   type: $Enums.Type_Responsible
   name: string
   size: $Enums.Size
+  cnpj: string | null
   createdAt: Date
   updatedAt: Date
   _count: TenantCountAggregateOutputType | null
@@ -188,10 +195,12 @@ export type TenantWhereInput = {
   type?: Prisma.EnumType_ResponsibleFilter<"Tenant"> | $Enums.Type_Responsible
   name?: Prisma.StringFilter<"Tenant"> | string
   size?: Prisma.EnumSizeFilter<"Tenant"> | $Enums.Size
+  cnpj?: Prisma.StringNullableFilter<"Tenant"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   responsible?: Prisma.XOR<Prisma.ResponsibleNullableScalarRelationFilter, Prisma.ResponsibleWhereInput> | null
   user?: Prisma.UserListRelationFilter
+  notificationEmails?: Prisma.NotificationEmailListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -199,14 +208,17 @@ export type TenantOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  cnpj?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   responsible?: Prisma.ResponsibleOrderByWithRelationInput
   user?: Prisma.UserOrderByRelationAggregateInput
+  notificationEmails?: Prisma.NotificationEmailOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  cnpj?: string
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
@@ -217,13 +229,15 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   responsible?: Prisma.XOR<Prisma.ResponsibleNullableScalarRelationFilter, Prisma.ResponsibleWhereInput> | null
   user?: Prisma.UserListRelationFilter
-}, "id">
+  notificationEmails?: Prisma.NotificationEmailListRelationFilter
+}, "id" | "cnpj">
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  cnpj?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TenantCountOrderByAggregateInput
@@ -239,6 +253,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumType_ResponsibleWithAggregatesFilter<"Tenant"> | $Enums.Type_Responsible
   name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   size?: Prisma.EnumSizeWithAggregatesFilter<"Tenant"> | $Enums.Size
+  cnpj?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
 }
@@ -247,22 +262,26 @@ export type TenantCreateInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedManyWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleUncheckedCreateNestedOneWithoutTenantInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -270,10 +289,12 @@ export type TenantUpdateInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -281,17 +302,20 @@ export type TenantUncheckedUpdateInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUncheckedUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -301,6 +325,7 @@ export type TenantUpdateManyMutationInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -310,6 +335,7 @@ export type TenantUncheckedUpdateManyInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -319,6 +345,7 @@ export type TenantCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  cnpj?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -328,6 +355,7 @@ export type TenantMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  cnpj?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -337,6 +365,7 @@ export type TenantMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  cnpj?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -356,6 +385,10 @@ export type EnumType_ResponsibleFieldUpdateOperationsInput = {
 
 export type EnumSizeFieldUpdateOperationsInput = {
   set?: $Enums.Size
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -390,24 +423,42 @@ export type TenantUpdateOneRequiredWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutUserInput, Prisma.TenantUpdateWithoutUserInput>, Prisma.TenantUncheckedUpdateWithoutUserInput>
 }
 
+export type TenantCreateNestedOneWithoutNotificationEmailsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutNotificationEmailsInput, Prisma.TenantUncheckedCreateWithoutNotificationEmailsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutNotificationEmailsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutNotificationEmailsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutNotificationEmailsInput, Prisma.TenantUncheckedCreateWithoutNotificationEmailsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutNotificationEmailsInput
+  upsert?: Prisma.TenantUpsertWithoutNotificationEmailsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutNotificationEmailsInput, Prisma.TenantUpdateWithoutNotificationEmailsInput>, Prisma.TenantUncheckedUpdateWithoutNotificationEmailsInput>
+}
+
 export type TenantCreateWithoutResponsibleInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedManyWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutResponsibleInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutResponsibleInput = {
@@ -431,9 +482,11 @@ export type TenantUpdateWithoutResponsibleInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutResponsibleInput = {
@@ -441,29 +494,35 @@ export type TenantUncheckedUpdateWithoutResponsibleInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUserInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleCreateNestedOneWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUserInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
-  size?: $Enums.Size
+  size: $Enums.Size
+  cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleUncheckedCreateNestedOneWithoutTenantInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUserInput = {
@@ -487,9 +546,11 @@ export type TenantUpdateWithoutUserInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUpdateOneWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUserInput = {
@@ -497,9 +558,75 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUncheckedUpdateOneWithoutTenantNestedInput
+  notificationEmails?: Prisma.NotificationEmailUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutNotificationEmailsInput = {
+  id?: string
+  type: $Enums.Type_Responsible
+  name: string
+  size: $Enums.Size
+  cnpj?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  responsible?: Prisma.ResponsibleCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutNotificationEmailsInput = {
+  id?: string
+  type: $Enums.Type_Responsible
+  name: string
+  size: $Enums.Size
+  cnpj?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  responsible?: Prisma.ResponsibleUncheckedCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutNotificationEmailsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutNotificationEmailsInput, Prisma.TenantUncheckedCreateWithoutNotificationEmailsInput>
+}
+
+export type TenantUpsertWithoutNotificationEmailsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutNotificationEmailsInput, Prisma.TenantUncheckedUpdateWithoutNotificationEmailsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutNotificationEmailsInput, Prisma.TenantUncheckedCreateWithoutNotificationEmailsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutNotificationEmailsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutNotificationEmailsInput, Prisma.TenantUncheckedUpdateWithoutNotificationEmailsInput>
+}
+
+export type TenantUpdateWithoutNotificationEmailsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responsible?: Prisma.ResponsibleUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutNotificationEmailsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.EnumSizeFieldUpdateOperationsInput | $Enums.Size
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responsible?: Prisma.ResponsibleUncheckedUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -509,10 +636,12 @@ export type TenantUncheckedUpdateWithoutUserInput = {
 
 export type TenantCountOutputType = {
   user: number
+  notificationEmails: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | TenantCountOutputTypeCountUserArgs
+  notificationEmails?: boolean | TenantCountOutputTypeCountNotificationEmailsArgs
 }
 
 /**
@@ -532,16 +661,25 @@ export type TenantCountOutputTypeCountUserArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.UserWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountNotificationEmailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationEmailWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   type?: boolean
   name?: boolean
   size?: boolean
+  cnpj?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   responsible?: boolean | Prisma.Tenant$responsibleArgs<ExtArgs>
   user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
+  notificationEmails?: boolean | Prisma.Tenant$notificationEmailsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -550,6 +688,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   type?: boolean
   name?: boolean
   size?: boolean
+  cnpj?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["tenant"]>
@@ -559,6 +698,7 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   type?: boolean
   name?: boolean
   size?: boolean
+  cnpj?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["tenant"]>
@@ -568,14 +708,16 @@ export type TenantSelectScalar = {
   type?: boolean
   name?: boolean
   size?: boolean
+  cnpj?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "name" | "size" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "name" | "size" | "cnpj" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   responsible?: boolean | Prisma.Tenant$responsibleArgs<ExtArgs>
   user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
+  notificationEmails?: boolean | Prisma.Tenant$notificationEmailsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -586,12 +728,14 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     responsible: Prisma.$ResponsiblePayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>[]
+    notificationEmails: Prisma.$NotificationEmailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     type: $Enums.Type_Responsible
     name: string
     size: $Enums.Size
+    cnpj: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["tenant"]>
@@ -990,6 +1134,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   responsible<T extends Prisma.Tenant$responsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$responsibleArgs<ExtArgs>>): Prisma.Prisma__ResponsibleClient<runtime.Types.Result.GetResult<Prisma.$ResponsiblePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.Tenant$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$userArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationEmails<T extends Prisma.Tenant$notificationEmailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$notificationEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1023,6 +1168,7 @@ export interface TenantFieldRefs {
   readonly type: Prisma.FieldRef<"Tenant", 'Type_Responsible'>
   readonly name: Prisma.FieldRef<"Tenant", 'String'>
   readonly size: Prisma.FieldRef<"Tenant", 'Size'>
+  readonly cnpj: Prisma.FieldRef<"Tenant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Tenant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tenant", 'DateTime'>
 }
@@ -1453,6 +1599,30 @@ export type Tenant$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Tenant.notificationEmails
+ */
+export type Tenant$notificationEmailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationEmail
+   */
+  select?: Prisma.NotificationEmailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationEmail
+   */
+  omit?: Prisma.NotificationEmailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationEmailInclude<ExtArgs> | null
+  where?: Prisma.NotificationEmailWhereInput
+  orderBy?: Prisma.NotificationEmailOrderByWithRelationInput | Prisma.NotificationEmailOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationEmailWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationEmailScalarFieldEnum | Prisma.NotificationEmailScalarFieldEnum[]
 }
 
 /**

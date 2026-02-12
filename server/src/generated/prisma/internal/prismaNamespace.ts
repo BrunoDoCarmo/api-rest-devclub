@@ -388,6 +388,7 @@ export const ModelName = {
   Responsible: 'Responsible',
   User: 'User',
   EmailVerification: 'EmailVerification',
+  NotificationEmail: 'NotificationEmail',
   Company_Data: 'Company_Data',
   Customer: 'Customer'
 } as const
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "tenant" | "responsible" | "user" | "emailVerification" | "company_Data" | "customer"
+    modelProps: "tenant" | "responsible" | "user" | "emailVerification" | "notificationEmail" | "company_Data" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,6 +706,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NotificationEmail: {
+      payload: Prisma.$NotificationEmailPayload<ExtArgs>
+      fields: Prisma.NotificationEmailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationEmailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationEmailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationEmailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationEmailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationEmailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationEmailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationEmailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationEmailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationEmailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        update: {
+          args: Prisma.NotificationEmailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationEmailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationEmailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationEmailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationEmailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationEmailPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationEmailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationEmail>
+        }
+        groupBy: {
+          args: Prisma.NotificationEmailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationEmailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationEmailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationEmailCountAggregateOutputType> | number
+        }
+      }
+    }
     Company_Data: {
       payload: Prisma.$Company_DataPayload<ExtArgs>
       fields: Prisma.Company_DataFieldRefs
@@ -897,6 +972,7 @@ export const TenantScalarFieldEnum = {
   type: 'type',
   name: 'name',
   size: 'size',
+  cnpj: 'cnpj',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -960,6 +1036,17 @@ export const EmailVerificationScalarFieldEnum = {
 } as const
 
 export type EmailVerificationScalarFieldEnum = (typeof EmailVerificationScalarFieldEnum)[keyof typeof EmailVerificationScalarFieldEnum]
+
+
+export const NotificationEmailScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  read: 'read',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationEmailScalarFieldEnum = (typeof NotificationEmailScalarFieldEnum)[keyof typeof NotificationEmailScalarFieldEnum]
 
 
 export const Company_DataScalarFieldEnum = {
@@ -1280,6 +1367,7 @@ export type GlobalOmitConfig = {
   responsible?: Prisma.ResponsibleOmit
   user?: Prisma.UserOmit
   emailVerification?: Prisma.EmailVerificationOmit
+  notificationEmail?: Prisma.NotificationEmailOmit
   company_Data?: Prisma.Company_DataOmit
   customer?: Prisma.CustomerOmit
 }

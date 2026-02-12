@@ -223,10 +223,10 @@ export type EmailVerificationOrderByWithRelationInput = {
 
 export type EmailVerificationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  email?: string
   AND?: Prisma.EmailVerificationWhereInput | Prisma.EmailVerificationWhereInput[]
   OR?: Prisma.EmailVerificationWhereInput[]
   NOT?: Prisma.EmailVerificationWhereInput | Prisma.EmailVerificationWhereInput[]
-  email?: Prisma.StringFilter<"EmailVerification"> | string
   tokenHash?: Prisma.StringFilter<"EmailVerification"> | string
   type?: Prisma.EnumEmailVerificationTypeFilter<"EmailVerification"> | $Enums.EmailVerificationType
   expiresAt?: Prisma.DateTimeFilter<"EmailVerification"> | Date | string
@@ -234,7 +234,7 @@ export type EmailVerificationWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringNullableFilter<"EmailVerification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"EmailVerification"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id">
+}, "id" | "email">
 
 export type EmailVerificationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
