@@ -104,16 +104,17 @@ const RedefinirSenhaPage = () => {
                 <div className="w-full max-w-lg bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 shadow-2xl overflow-y-auto max-h-[95vh] scrollbar-hide">
                     <div>
                         {!isSuccess && (
-                            <>
+                            <div className="flex items-center flex-col">
                                 <Link
                                     href="/login" 
-                                    className="group flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-2 font-bold text-white transition-all hover:bg-green-500 mt-1 mb-1"
+                                    className="group flex items-center justify-center gap-2
+                                    font-bold text-white transition-all mb-2"
                                 >
                                     <ChevronLeft className="w-4 h-4 transition-transform group-hover:translate-x-1" /> Voltar para o login
                                 </Link>
                                 <h1 className="text-xl font-bold text-white tracking-tight">Redefinir Senha</h1>
                                 <p className="text-zinc-500 text-xs mt-1">Crie uma nova senha segura para sua conta InovaSoft.</p>
-                            </>
+                            </div>
                         )}
                     </div>
                     {!isSuccess ? (
@@ -127,7 +128,7 @@ const RedefinirSenhaPage = () => {
                                 </Modal>
                             )}
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                 {/* CAMPO SENHA */}
                                 <div className="flex flex-col gap-2">
                                     <Label htmlFor="password" title="Senha" className="text-green-600 font-bold flex items-center gap-2">Senha</Label>
@@ -136,7 +137,10 @@ const RedefinirSenhaPage = () => {
                                         <Input 
                                             id="password"
                                             type={showPassword ? "text" : "password"} 
-                                            className="pl-10 pr-10 h-12 bg-white text-black rounded-xl border-zinc-200 focus-visible:ring-green-500/20"
+                                            className={cn(
+                                                "pl-10 pr-10 h-12 bg-zinc-900 border border-zinc-800 text-white rounded-xl focus-visible:ring-blue-500/20",
+                                                confirmPassword && (password === confirmPassword ? "border-emerald-500 ring-2 ring-emerald-500/10" : "border-red-500 ring-2 ring-red-500/10")
+                                            )}
                                             placeholder="••••••••" 
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
@@ -160,7 +164,7 @@ const RedefinirSenhaPage = () => {
                                             id="confirmPassword"
                                             type={showConfirmPassword ? "text" : "password"} 
                                             className={cn(
-                                                "pl-10 pr-10 h-12 bg-white text-black rounded-xl border-zinc-200 focus-visible:ring-green-500/20 transition-all",
+                                                "pl-10 pr-10 h-12 bg-zinc-900 border border-zinc-800 text-white rounded-xl focus-visible:ring-blue-500/20",
                                                 confirmPassword && (password === confirmPassword ? "border-emerald-500 ring-2 ring-emerald-500/10" : "border-red-500 ring-2 ring-red-500/10")
                                             )}
                                             placeholder="••••••••" 
@@ -180,18 +184,13 @@ const RedefinirSenhaPage = () => {
 
                             {/* PAINEL DE FORÇA E REQUISITOS */}
                             <div className="flex flex-col gap-2 col-span-2">
-                                <div className="bg-zinc-50 p-4 space-y-4 rounded-xl border border-zinc-100 shadow-sm">
+                                <div className="bg-zinc-900 border border-zinc-800 p-4 space-y-4 rounded-xl shadow-sm">
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center px-1">
                                             <span className="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">
                                                 Força da Senha
                                             </span>
-                                            <span className={cn(
-                                                "text-[10px] font-bold uppercase",
-                                                calculateStrength() < 40 ? "text-red-500" : 
-                                                calculateStrength() < 80 ? "text-amber-500" :
-                                                calculateStrength() < 100 ? "text-emerald-500" : "text-green-700"
-                                            )}>
+                                            <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">
                                                 {calculateStrength() < 40 ? "Fraca" : 
                                                 calculateStrength() < 80 ? "Média" :
                                                 calculateStrength() < 100 ? "Forte" : "Excelente"}
@@ -229,7 +228,8 @@ const RedefinirSenhaPage = () => {
                             <button
                                 type="submit"
                                 disabled={isLoading || !token || calculateStrength() < 100 || password !== confirmPassword}
-                                className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-zinc-200 active:scale-[0.98] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-sm shadow-lg shadow-white/5"
+                                className="cursor-pointer w-full mt-2 py-3 bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed rounded-xl text-white font-bold transition-all shadow-lg shadow-green-600/20"
+
                             >
                                 Redefinir Senha
                             </button>
