@@ -95,13 +95,13 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
 
   return (
     <>
-    {loading && (
-      <Loading 
-        fullScreen 
-        label="Autenticando..." 
-        className="bg-black/60 backdrop-blur-md z-10" // Garante que fique acima de tudo
-      />
-    )}
+      {loading && (
+        <Loading 
+          fullScreen 
+          label="Autenticando..." 
+          className="bg-black/60 backdrop-blur-md z-10" // Garante que fique acima de tudo
+        />
+      )}
       <div className="w-full max-w-md mx-auto p-6 bg-zinc-950 border border-zinc-900 rounded-2xl">
         <form onSubmit={(e) => {
           e.preventDefault()
@@ -122,7 +122,6 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
                 />
               </div>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-green-600 font-bold flex items-center gap-2" htmlFor="password">
               Senha
@@ -138,7 +137,6 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
               />
             </div>
           </div>
-
           <button
             type="submit"
             disabled={loading}
@@ -147,7 +145,6 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
             Entrar
           </button>
         </form>
-
         <div className="flex flex-col gap-3 mt-8 items-center">
           <button
             type="button"

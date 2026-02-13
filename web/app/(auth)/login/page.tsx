@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import UserLogin from "../../_components/login";
 import Modal from "@/app/_components/modal";
-import EsqueceuModal from "@/app/_components/esqueceu-senha";
+import EsqueceuModal from "@/app/_components/esqueceu-senha-modal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
