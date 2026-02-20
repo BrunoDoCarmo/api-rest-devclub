@@ -123,7 +123,7 @@ export const useCreateForm = () => {
       email: dataFromApi.email || prev.email,
       telephone1: dataFromApi.ddd_telefone_1 || prev.telephone1,
       telephone2: dataFromApi.ddd_telefone_2 || prev.telephone2,
-      cell_phone1: dataFromApi.ddd_celular_1 || prev.cell_phone1,
+      cell_phone1: dataFromApi.ddd_celular_1 === "" ? (dataFromApi.ddd_celular_1 || prev.cell_phone1) : dataFromApi.ddd_telefone_1 || prev.cell_phone1, 
       cell_phone2: dataFromApi.ddd_celular_2 || prev.cell_phone2,
     }));
   };

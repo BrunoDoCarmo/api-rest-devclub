@@ -50,9 +50,9 @@ export const StepUser = ({ data, onChange }: StepUserProps) => {
             <Input 
               id="email"
               type="email"
-              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20"
+              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20 lowercase"
               placeholder="seu@email.com" 
-              value={data.email} 
+              value={data.email.toLowerCase()} 
               onChange={(e) => onChange({ ...data, email: e.target.value })} 
             />
           </div>
@@ -67,9 +67,9 @@ export const StepUser = ({ data, onChange }: StepUserProps) => {
             <User className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
             <Input 
               id="displayName"
-              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20"
+              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20 uppercase"
               placeholder="Como quer ser chamado?" 
-              value={data.name} 
+              value={data.name.toUpperCase()} 
               onChange={(e) => onChange({ ...data, name: e.target.value })} 
             />
           </div>
@@ -84,9 +84,9 @@ export const StepUser = ({ data, onChange }: StepUserProps) => {
             <AtSign className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
             <Input 
               id="username"
-              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20"
+              className="pl-10 h-12 bg-white rounded-xl border-zinc-200 focus-visible:ring-blue-500/20 lowercase"
               placeholder="ex: joao.silva" 
-              value={data.username} 
+              value={data.username.toLowerCase()} 
               onChange={(e) => onChange({ ...data, username: e.target.value })} 
             />
           </div>

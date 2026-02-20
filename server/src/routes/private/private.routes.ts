@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/user', userAuthRoutes);
 router.get('/user-list',ensureAuthenticated,  listUsersController);
-router.get('/user-create',ensureAuthenticated,  createUserController);
+router.post('/user-create',ensureAuthenticated,  createUserController);
 
 export default router;

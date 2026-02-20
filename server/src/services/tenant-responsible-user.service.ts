@@ -57,7 +57,7 @@ export class TenantResponsibleUserService {
           password: hashPassword,
           role: "ADMIN",
           tenantId: createdTenant.id,
-          responsibleId: createdResponsible.id
+          responsibleId: null
         }
       })
     

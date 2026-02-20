@@ -45,8 +45,6 @@ interface User {
 interface UserData{
     email: string;
     name: string;
-    username: string;
-    password: string;
 }
 
 const UserContent = () => {
@@ -56,8 +54,6 @@ const UserContent = () => {
   const [formData, setFormData] = useState<UserData>({
     email: "",
     name: "",
-    username: "",
-    password: "",
   });
 
   const [totalItems, setTotalItems] = useState(0); // Total de registros no banco

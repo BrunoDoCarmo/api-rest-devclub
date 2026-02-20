@@ -29,6 +29,9 @@ export interface ResponsibleData {
 export interface UserData {
   name: string;
   email: string;
+}
+export interface UpdateUserCreateAccount {
+  tenantId: string;
   username: string;
   password: string;
 }

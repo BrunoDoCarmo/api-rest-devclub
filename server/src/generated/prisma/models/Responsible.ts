@@ -305,7 +305,6 @@ export type ResponsibleWhereInput = {
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   companies_data?: Prisma.Company_DataListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
-  users?: Prisma.UserListRelationFilter
 }
 
 export type ResponsibleOrderByWithRelationInput = {
@@ -332,7 +331,6 @@ export type ResponsibleOrderByWithRelationInput = {
   tenant?: Prisma.TenantOrderByWithRelationInput
   companies_data?: Prisma.Company_DataOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
-  users?: Prisma.UserOrderByRelationAggregateInput
 }
 
 export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
@@ -362,7 +360,6 @@ export type ResponsibleWhereUniqueInput = Prisma.AtLeast<{
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   companies_data?: Prisma.Company_DataListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
-  users?: Prisma.UserListRelationFilter
 }, "id" | "cpf" | "cnpj" | "email" | "tenantId">
 
 export type ResponsibleOrderByWithAggregationInput = {
@@ -440,7 +437,6 @@ export type ResponsibleCreateInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutResponsibleInput
   companies_data?: Prisma.Company_DataCreateNestedManyWithoutResponsibleInput
   customers?: Prisma.CustomerCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleUncheckedCreateInput = {
@@ -466,7 +462,6 @@ export type ResponsibleUncheckedCreateInput = {
   tenantId: string
   companies_data?: Prisma.Company_DataUncheckedCreateNestedManyWithoutResponsibleInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleUpdateInput = {
@@ -492,7 +487,6 @@ export type ResponsibleUpdateInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutResponsibleNestedInput
   companies_data?: Prisma.Company_DataUpdateManyWithoutResponsibleNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleUncheckedUpdateInput = {
@@ -518,7 +512,6 @@ export type ResponsibleUncheckedUpdateInput = {
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   companies_data?: Prisma.Company_DataUncheckedUpdateManyWithoutResponsibleNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUncheckedUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleCreateManyInput = {
@@ -704,20 +697,6 @@ export type EnumStateFieldUpdateOperationsInput = {
   set?: $Enums.State
 }
 
-export type ResponsibleCreateNestedOneWithoutUsersInput = {
-  create?: Prisma.XOR<Prisma.ResponsibleCreateWithoutUsersInput, Prisma.ResponsibleUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.ResponsibleCreateOrConnectWithoutUsersInput
-  connect?: Prisma.ResponsibleWhereUniqueInput
-}
-
-export type ResponsibleUpdateOneRequiredWithoutUsersNestedInput = {
-  create?: Prisma.XOR<Prisma.ResponsibleCreateWithoutUsersInput, Prisma.ResponsibleUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.ResponsibleCreateOrConnectWithoutUsersInput
-  upsert?: Prisma.ResponsibleUpsertWithoutUsersInput
-  connect?: Prisma.ResponsibleWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ResponsibleUpdateToOneWithWhereWithoutUsersInput, Prisma.ResponsibleUpdateWithoutUsersInput>, Prisma.ResponsibleUncheckedUpdateWithoutUsersInput>
-}
-
 export type ResponsibleCreateNestedOneWithoutCompanies_dataInput = {
   create?: Prisma.XOR<Prisma.ResponsibleCreateWithoutCompanies_dataInput, Prisma.ResponsibleUncheckedCreateWithoutCompanies_dataInput>
   connectOrCreate?: Prisma.ResponsibleCreateOrConnectWithoutCompanies_dataInput
@@ -768,7 +747,6 @@ export type ResponsibleCreateWithoutTenantInput = {
   updatedAt?: Date | string
   companies_data?: Prisma.Company_DataCreateNestedManyWithoutResponsibleInput
   customers?: Prisma.CustomerCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleUncheckedCreateWithoutTenantInput = {
@@ -793,7 +771,6 @@ export type ResponsibleUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   companies_data?: Prisma.Company_DataUncheckedCreateNestedManyWithoutResponsibleInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleCreateOrConnectWithoutTenantInput = {
@@ -834,7 +811,6 @@ export type ResponsibleUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   companies_data?: Prisma.Company_DataUpdateManyWithoutResponsibleNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleUncheckedUpdateWithoutTenantInput = {
@@ -857,123 +833,6 @@ export type ResponsibleUncheckedUpdateWithoutTenantInput = {
   state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  companies_data?: Prisma.Company_DataUncheckedUpdateManyWithoutResponsibleNestedInput
-  customers?: Prisma.CustomerUncheckedUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUncheckedUpdateManyWithoutResponsibleNestedInput
-}
-
-export type ResponsibleCreateWithoutUsersInput = {
-  id?: string
-  name: string
-  cpf?: string | null
-  cnpj?: string | null
-  public_place: string
-  number: string
-  neighborhood: string
-  complement?: string | null
-  cep: string
-  city: string
-  uf: string
-  telephone1?: string | null
-  telephone2?: string | null
-  cell_phone1: string
-  cell_phone2?: string | null
-  email: string
-  state?: $Enums.State
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tenant: Prisma.TenantCreateNestedOneWithoutResponsibleInput
-  companies_data?: Prisma.Company_DataCreateNestedManyWithoutResponsibleInput
-  customers?: Prisma.CustomerCreateNestedManyWithoutResponsibleInput
-}
-
-export type ResponsibleUncheckedCreateWithoutUsersInput = {
-  id?: string
-  name: string
-  cpf?: string | null
-  cnpj?: string | null
-  public_place: string
-  number: string
-  neighborhood: string
-  complement?: string | null
-  cep: string
-  city: string
-  uf: string
-  telephone1?: string | null
-  telephone2?: string | null
-  cell_phone1: string
-  cell_phone2?: string | null
-  email: string
-  state?: $Enums.State
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tenantId: string
-  companies_data?: Prisma.Company_DataUncheckedCreateNestedManyWithoutResponsibleInput
-  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutResponsibleInput
-}
-
-export type ResponsibleCreateOrConnectWithoutUsersInput = {
-  where: Prisma.ResponsibleWhereUniqueInput
-  create: Prisma.XOR<Prisma.ResponsibleCreateWithoutUsersInput, Prisma.ResponsibleUncheckedCreateWithoutUsersInput>
-}
-
-export type ResponsibleUpsertWithoutUsersInput = {
-  update: Prisma.XOR<Prisma.ResponsibleUpdateWithoutUsersInput, Prisma.ResponsibleUncheckedUpdateWithoutUsersInput>
-  create: Prisma.XOR<Prisma.ResponsibleCreateWithoutUsersInput, Prisma.ResponsibleUncheckedCreateWithoutUsersInput>
-  where?: Prisma.ResponsibleWhereInput
-}
-
-export type ResponsibleUpdateToOneWithWhereWithoutUsersInput = {
-  where?: Prisma.ResponsibleWhereInput
-  data: Prisma.XOR<Prisma.ResponsibleUpdateWithoutUsersInput, Prisma.ResponsibleUncheckedUpdateWithoutUsersInput>
-}
-
-export type ResponsibleUpdateWithoutUsersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  public_place?: Prisma.StringFieldUpdateOperationsInput | string
-  number?: Prisma.StringFieldUpdateOperationsInput | string
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
-  complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
-  telephone1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  telephone2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cell_phone1?: Prisma.StringFieldUpdateOperationsInput | string
-  cell_phone2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenant?: Prisma.TenantUpdateOneRequiredWithoutResponsibleNestedInput
-  companies_data?: Prisma.Company_DataUpdateManyWithoutResponsibleNestedInput
-  customers?: Prisma.CustomerUpdateManyWithoutResponsibleNestedInput
-}
-
-export type ResponsibleUncheckedUpdateWithoutUsersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  public_place?: Prisma.StringFieldUpdateOperationsInput | string
-  number?: Prisma.StringFieldUpdateOperationsInput | string
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
-  complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
-  telephone1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  telephone2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cell_phone1?: Prisma.StringFieldUpdateOperationsInput | string
-  cell_phone2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   companies_data?: Prisma.Company_DataUncheckedUpdateManyWithoutResponsibleNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutResponsibleNestedInput
 }
@@ -1000,7 +859,6 @@ export type ResponsibleCreateWithoutCompanies_dataInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutResponsibleInput
   customers?: Prisma.CustomerCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleUncheckedCreateWithoutCompanies_dataInput = {
@@ -1025,7 +883,6 @@ export type ResponsibleUncheckedCreateWithoutCompanies_dataInput = {
   updatedAt?: Date | string
   tenantId: string
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleCreateOrConnectWithoutCompanies_dataInput = {
@@ -1066,7 +923,6 @@ export type ResponsibleUpdateWithoutCompanies_dataInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutResponsibleNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleUncheckedUpdateWithoutCompanies_dataInput = {
@@ -1091,7 +947,6 @@ export type ResponsibleUncheckedUpdateWithoutCompanies_dataInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUncheckedUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleCreateWithoutCustomersInput = {
@@ -1116,7 +971,6 @@ export type ResponsibleCreateWithoutCustomersInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutResponsibleInput
   companies_data?: Prisma.Company_DataCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleUncheckedCreateWithoutCustomersInput = {
@@ -1141,7 +995,6 @@ export type ResponsibleUncheckedCreateWithoutCustomersInput = {
   updatedAt?: Date | string
   tenantId: string
   companies_data?: Prisma.Company_DataUncheckedCreateNestedManyWithoutResponsibleInput
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutResponsibleInput
 }
 
 export type ResponsibleCreateOrConnectWithoutCustomersInput = {
@@ -1182,7 +1035,6 @@ export type ResponsibleUpdateWithoutCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutResponsibleNestedInput
   companies_data?: Prisma.Company_DataUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUpdateManyWithoutResponsibleNestedInput
 }
 
 export type ResponsibleUncheckedUpdateWithoutCustomersInput = {
@@ -1207,7 +1059,6 @@ export type ResponsibleUncheckedUpdateWithoutCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   companies_data?: Prisma.Company_DataUncheckedUpdateManyWithoutResponsibleNestedInput
-  users?: Prisma.UserUncheckedUpdateManyWithoutResponsibleNestedInput
 }
 
 
@@ -1218,13 +1069,11 @@ export type ResponsibleUncheckedUpdateWithoutCustomersInput = {
 export type ResponsibleCountOutputType = {
   companies_data: number
   customers: number
-  users: number
 }
 
 export type ResponsibleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   companies_data?: boolean | ResponsibleCountOutputTypeCountCompanies_dataArgs
   customers?: boolean | ResponsibleCountOutputTypeCountCustomersArgs
-  users?: boolean | ResponsibleCountOutputTypeCountUsersArgs
 }
 
 /**
@@ -1249,13 +1098,6 @@ export type ResponsibleCountOutputTypeCountCompanies_dataArgs<ExtArgs extends ru
  */
 export type ResponsibleCountOutputTypeCountCustomersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CustomerWhereInput
-}
-
-/**
- * ResponsibleCountOutputType without action
- */
-export type ResponsibleCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserWhereInput
 }
 
 
@@ -1283,7 +1125,6 @@ export type ResponsibleSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   companies_data?: boolean | Prisma.Responsible$companies_dataArgs<ExtArgs>
   customers?: boolean | Prisma.Responsible$customersArgs<ExtArgs>
-  users?: boolean | Prisma.Responsible$usersArgs<ExtArgs>
   _count?: boolean | Prisma.ResponsibleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["responsible"]>
 
@@ -1363,7 +1204,6 @@ export type ResponsibleInclude<ExtArgs extends runtime.Types.Extensions.Internal
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   companies_data?: boolean | Prisma.Responsible$companies_dataArgs<ExtArgs>
   customers?: boolean | Prisma.Responsible$customersArgs<ExtArgs>
-  users?: boolean | Prisma.Responsible$usersArgs<ExtArgs>
   _count?: boolean | Prisma.ResponsibleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ResponsibleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1379,7 +1219,6 @@ export type $ResponsiblePayload<ExtArgs extends runtime.Types.Extensions.Interna
     tenant: Prisma.$TenantPayload<ExtArgs>
     companies_data: Prisma.$Company_DataPayload<ExtArgs>[]
     customers: Prisma.$CustomerPayload<ExtArgs>[]
-    users: Prisma.$UserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1799,7 +1638,6 @@ export interface Prisma__ResponsibleClient<T, Null = never, ExtArgs extends runt
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   companies_data<T extends Prisma.Responsible$companies_dataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Responsible$companies_dataArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Company_DataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customers<T extends Prisma.Responsible$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Responsible$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  users<T extends Prisma.Responsible$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Responsible$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2290,30 +2128,6 @@ export type Responsible$customersArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
-}
-
-/**
- * Responsible.users
- */
-export type Responsible$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
-  cursor?: Prisma.UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**

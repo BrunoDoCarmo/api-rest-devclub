@@ -12,12 +12,12 @@ model Tenant {
   type      Type_Responsible
   name      String //NOME
   size      Size //TAMANHO
-  cnpj      String?           @unique
+  cnpj      String?          @unique
   createdAt DateTime         @default(now()) //DATA CRIACAO
   updatedAt DateTime         @updatedAt //DATA ALTERACAO
 
-  responsible Responsible? //RESPONSAVEL
-  user        User[] //USUARIO
+  responsible        Responsible? //RESPONSAVEL
+  user               User[] //USUARIO
   notificationEmails NotificationEmail[]
 
   @@map("tenant")
@@ -49,32 +49,40 @@ model Responsible {
 
   companies_data Company_Data[]
   customers      Customer[]
-  users          User[]
 
   @@map("responsible")
 }
 
 model User {
   id        String   @id @default(uuid())
-  name      String //NOME
   email     String   @unique
-  username  String   @unique //NOME DE USUARIO
-  password  String //SENHA
-  role      UserRole @default(USER)
-  state     State    @default(ACTIVE) //ESTADO
+  username  String?  @unique //NOME DE USUARIO
+  password  String? //SENHA
+
+  memberships Memberships[]
+
   createdAt DateTime @default(now()) //DATA CRIACAO
   updatedAt DateTime @updatedAt //DATA ALTERACAO
+  @@map("user")
+}
 
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
+model Memberships {
+  id String @id @default(uuid())
+  name      String //NOME
+  role      UserRole @default(USER)
+  state     State    @default(ACTIVE) //ESTADO
+
+  userId String
+  user User @relation(fields: userId, references: [id])
+
   tenantId String
-
-  responsible   Responsible @relation(fields: [responsibleId], references: [id])
-  responsibleId String
-
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  
   emailVerified      Boolean             @default(false)
   emailVerifications EmailVerification[]
 
-  @@map("user")
+  @@unique([userId, tenantId])
+  @@map("memberships")
 }
 
 model EmailVerification {
@@ -100,8 +108,8 @@ model NotificationEmail {
   read      Boolean  @default(false)
   tenantId  String
   createdAt DateTime @default(now())
-  
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Company_Data {

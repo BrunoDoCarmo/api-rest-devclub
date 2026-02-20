@@ -8,13 +8,10 @@ CREATE TYPE "Size" AS ENUM ('SMALL', 'MEDIUM', 'LARGE');
 CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
 
 -- CreateEnum
-CREATE TYPE "EmailVerificationType" AS ENUM ('USER');
+CREATE TYPE "EmailVerificationType" AS ENUM ('USER', 'RESPONSIBLE');
 
 -- CreateEnum
 CREATE TYPE "State" AS ENUM ('ACTIVE', 'DISABLED', 'DELETED');
-
--- CreateEnum
-CREATE TYPE "Regime" AS ENUM ('ICMS_TAXPAYER', 'EXEMPT_FROM_REGISTRATION', 'NON_TAXPAYER');
 
 -- CreateTable
 CREATE TABLE "tenant" (
@@ -22,7 +19,7 @@ CREATE TABLE "tenant" (
     "type" "Type_Responsible" NOT NULL,
     "name" TEXT NOT NULL,
     "size" "Size" NOT NULL,
-    "cnpj" TEXT NOT NULL,
+    "cnpj" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -58,19 +55,26 @@ CREATE TABLE "responsible" (
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "role" "UserRole" NOT NULL DEFAULT 'USER',
-    "state" "State" NOT NULL DEFAULT 'ACTIVE',
+    "username" TEXT,
+    "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "tenantId" TEXT NOT NULL,
-    "responsibleId" TEXT NOT NULL,
-    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "memberships" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT 'USER',
+    "state" "State" NOT NULL DEFAULT 'ACTIVE',
+    "userId" TEXT NOT NULL,
+    "tenantId" TEXT NOT NULL,
+    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "memberships_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -88,60 +92,14 @@ CREATE TABLE "emailverification" (
 );
 
 -- CreateTable
-CREATE TABLE "company_data" (
+CREATE TABLE "NotificationEmail" (
     "id" TEXT NOT NULL,
-    "company_name" TEXT NOT NULL,
-    "fantasy" TEXT NOT NULL,
-    "cnpj" TEXT NOT NULL,
-    "ie" TEXT,
-    "public_place" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
-    "neighborhood" TEXT NOT NULL,
-    "complement" TEXT,
-    "cep" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "uf" TEXT NOT NULL,
-    "telephone1" TEXT,
-    "telephone2" TEXT,
-    "cell_phone1" TEXT NOT NULL,
-    "cell_phone2" TEXT,
-    "email" TEXT NOT NULL,
-    "site" TEXT,
-    "state" "State" NOT NULL DEFAULT 'ACTIVE',
+    "content" TEXT NOT NULL,
+    "read" BOOLEAN NOT NULL DEFAULT false,
+    "tenantId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "responsibleId" TEXT NOT NULL,
 
-    CONSTRAINT "company_data_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "customer" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "cpf" TEXT,
-    "cnpj" TEXT,
-    "ie" TEXT,
-    "regime" "Regime" NOT NULL DEFAULT 'ICMS_TAXPAYER',
-    "public_place" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
-    "neighborhood" TEXT NOT NULL,
-    "complement" TEXT,
-    "cep" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "uf" TEXT NOT NULL,
-    "telephone1" TEXT,
-    "telephone2" TEXT,
-    "cell_phone1" TEXT NOT NULL,
-    "cell_phone2" TEXT,
-    "email" TEXT NOT NULL,
-    "contact" TEXT,
-    "state" "State" NOT NULL DEFAULT 'ACTIVE',
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "responsibleId" TEXT NOT NULL,
-
-    CONSTRAINT "customer_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "NotificationEmail_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -166,31 +124,22 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "memberships_userId_tenantId_key" ON "memberships"("userId", "tenantId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "emailverification_email_key" ON "emailverification"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "company_data_cnpj_key" ON "company_data"("cnpj");
-
--- CreateIndex
-CREATE UNIQUE INDEX "customer_cpf_key" ON "customer"("cpf");
-
--- CreateIndex
-CREATE UNIQUE INDEX "customer_cnpj_key" ON "customer"("cnpj");
 
 -- AddForeignKey
 ALTER TABLE "responsible" ADD CONSTRAINT "responsible_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "memberships" ADD CONSTRAINT "memberships_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "responsible"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "memberships" ADD CONSTRAINT "memberships_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "emailverification" ADD CONSTRAINT "emailverification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "company_data" ADD CONSTRAINT "company_data_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "responsible"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "customer" ADD CONSTRAINT "customer_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "responsible"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "NotificationEmail" ADD CONSTRAINT "NotificationEmail_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

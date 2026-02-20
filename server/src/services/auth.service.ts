@@ -9,6 +9,7 @@ interface LoginResult {
     email: string;
     type?: string;
     role: string;
+    tenantName: string;
   };
   token: string;
 }
@@ -66,7 +67,15 @@ export class AuthService {
     const secret = process.env.JWT_ACCESS_SECRET || "fallback_para_teste_apenas";
 
     const token = jwt.sign(
-      { sub: user.id, email: user.email, name: user.name, tenantId: user.tenantId, type: user.tenant.type, role: user.role },
+      { 
+        sub: user.id, 
+        email: user.email, 
+        name: user.name, 
+        tenantId: user.tenantId, 
+        tenantName: user.tenant.name, 
+        type: user.tenant.type, 
+        role: user.role
+      },
       secret,
     );
 
@@ -77,6 +86,7 @@ export class AuthService {
         email: user.email,
         type: user.tenant?.type,
         role: user.role,
+        tenantName: user.tenant?.name
       },
       token,
     };

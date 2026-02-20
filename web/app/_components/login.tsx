@@ -116,7 +116,7 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
                 <Input 
                   id="identifier"
                   type="text"
-                  className="pl-10 h-12 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus-visible:ring-blue-500/20"
+                  className="pl-10 h-12 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus-visible:ring-green-500/20"
                   placeholder="seu@email.com" 
                   ref={identifierRef}
                 />
@@ -131,7 +131,7 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
               <Input 
                 id="password"
                 type="password"
-                className="pl-10 h-12 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus-visible:ring-blue-500/20"
+                className="pl-10 h-12 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus-visible:ring-green-500/20"
                 placeholder="••••••••" 
                 ref={passwordRef}
               />

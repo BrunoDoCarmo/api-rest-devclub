@@ -63,12 +63,12 @@ export function Navbar() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/private/user/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      const data = await response.json();
+      const nameToShow = data.user?.name || data.name
 
-      if (response.ok) {
-        const data = await response.json();
+      if (nameToShow) {
         setUserName(data.name);
       } else if (response.status === 401) {
-        // Token expirado ou inválido
         logoutAction();
       }
     } catch (error) {
@@ -107,7 +107,7 @@ export function Navbar() {
     }
 
     if (!isAuthPage) {
-        fetchUserProfile(token);
+      fetchUserProfile(token);
     }
   }, [fetchUserProfile, isAuthPage]);
 
@@ -190,7 +190,7 @@ export function Navbar() {
                       {userName?.substring(0, 2).toUpperCase() || <User size={16} />}
                     </div>
                     <span className="capitalize max-w-[120px] truncate">
-                      {userName.toUpperCase() || "Usuário"}
+                      {userName || "Usuário"}
                     </span>
                     {/* Ícone de seta opcional */}
                     <ChevronDown size={14} className={`transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />

@@ -1,5 +1,6 @@
 import { prisma } from "../lib/prisma";
 import type { CreateUserModel } from "../models/user/create-user.model";
+import type { UpdateUserCreateAccountModel } from "../models/user/update-user-create-account.model";
 
 export class UserRepository {
     async create(data: CreateUserModel, tenantId: string, responsibleId: string) {
@@ -8,11 +9,11 @@ export class UserRepository {
         const rId = responsibleId.trim();
 
         // 2. Busca com findFirst (mais tolerante)
-        const tenant = await prisma.tenant.findFirst({ where: { id: tId } });
-        const responsible = await prisma.responsible.findFirst({ where: { id: rId } });
+        const [ tenant, responsible] = await Promise.all([
+            prisma.tenant.findFirst({ where: { id: tId } }),
+            prisma.user.findFirst({ where: { id: rId } })
 
-        console.log("Busca Tenant:", tenant ? "Encontrado" : "Nulo");
-        console.log("Busca Responsible:", responsible ? "Encontrado" : "Nulo");
+        ]) 
 
         if (!tenant) throw new Error("A empresa informada não existe.");
         if (!responsible) throw new Error("O responsável informado não existe.");
@@ -20,8 +21,20 @@ export class UserRepository {
         return prisma.user.create({
             data: {
                 ...data,
-                tenantId,
-                responsibleId,
+                tenantId: tId,
+                responsibleId: rId,
+            }
+        })
+    }
+    
+    async updateAccountCreate(data: UpdateUserCreateAccountModel, email: string,) {
+        return prisma.user.update({
+            where: {
+                email: email,
+            },
+            data: {
+                username: data.username,
+                password: data.password
             }
         })
     }
