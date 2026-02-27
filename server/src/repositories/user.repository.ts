@@ -1,30 +1,27 @@
 import { prisma } from "../lib/prisma";
+import type { CreateMembershipsModel } from "../models/memberships/create-memberships.model";
 import type { CreateUserModel } from "../models/user/create-user.model";
 import type { UpdateUserCreateAccountModel } from "../models/user/update-user-create-account.model";
 
 export class UserRepository {
-    async create(data: CreateUserModel, tenantId: string, responsibleId: string) {
-        // 1. Limpeza rigorosa
-        const tId = tenantId.trim();
-        const rId = responsibleId.trim();
-
-        // 2. Busca com findFirst (mais tolerante)
-        const [ tenant, responsible] = await Promise.all([
-            prisma.tenant.findFirst({ where: { id: tId } }),
-            prisma.user.findFirst({ where: { id: rId } })
-
-        ]) 
-
-        if (!tenant) throw new Error("A empresa informada não existe.");
-        if (!responsible) throw new Error("O responsável informado não existe.");
-
-        return prisma.user.create({
-            data: {
-                ...data,
-                tenantId: tId,
-                responsibleId: rId,
-            }
+    async create(dataUser: CreateUserModel, dataMemberships: CreateMembershipsModel, tenantId: string, userId: string) {
+        const newUser = await prisma.$transaction(async (tx) => {
+            const user = await tx.user.create({
+                data: {
+                    email: dataUser.email,
+                }
+            })
+            const member = await tx.memberships.create({
+                data: {
+                    name: dataMemberships.name,
+                    state: "ACTIVE",
+                    tenantId: tenantId,
+                    userId: user.id
+                }
+            })
+            return {user, member}
         })
+        return newUser
     }
     
     async updateAccountCreate(data: UpdateUserCreateAccountModel, email: string,) {
@@ -43,17 +40,17 @@ export class UserRepository {
         const skip = (page - 1 ) * limit;
 
         const [total, users] = await Promise.all([
-            prisma.user.count({ where: { tenantId } }),
-            prisma.user.findMany({
+            prisma.memberships.count({ where: { tenantId } }),
+            prisma.memberships.findMany({
                 where: { tenantId },
-                select: {
-                    id: true,
-                    name: true,
-                    username: true,
-                    email: true,
-                    state: true,
-                    role: true,
-                    emailVerified: true,
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            email: true,
+                        },
+                    }
                 },
                 orderBy: {
                     name: "asc"

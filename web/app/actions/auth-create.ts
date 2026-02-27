@@ -1,25 +1,24 @@
-import { ResponsibleData, TenantData } from "../types/auth-create";
-
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/public`;
+import { ResponsibleData, TenantData, UserData, MembershipsData } from "../types/auth-create";
 
 export interface SignupPayload {
   tenant: TenantData;
   responsible: ResponsibleData;
+  user: UserData,
+  memberships: MembershipsData
 }
 
 export const signup = async (payload: SignupPayload) => {
-  const response = await fetch(`${API_URL}/signup`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
   
-  const data = await response.json();
-
   if (!response.ok) {
-    // Tenta capturar a mensagem de erro do backend ou usa uma padrão
-    throw new Error(data.message || data.error || "Erro ao realizar o cadastro");
+    const errorData = await response.json();
+    console.error("ERRO DO SERVIDOR", errorData)
+    throw new Error(errorData.message || "Erro ao realizar o cadastro");
   }
 
-  return data;
+  return response.json();
 };

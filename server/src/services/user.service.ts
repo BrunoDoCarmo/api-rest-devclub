@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
 import type { CreateUserModel } from "../models/user/create-user.model";
+import type { UpdateUserCreateAccountModel } from "../models/user/update-user-create-account.model";
 import { UserRepository } from "../repositories/user.repository";
 import { generateEmailToken } from "../utils/email-token";
 import { mailer } from "../lib/mail";
 import { prisma } from "../lib/prisma";
-import type { UpdateUserCreateAccountModel } from "../models/user/update-user-create-account.model";
 
 export class UserService {
   private userRepository = new UserRepository();
@@ -23,58 +23,104 @@ export class UserService {
     };
   }
 
-  async createUser(data: CreateUserModel, tenantId: string, responsibleId: string) {
+  async createUser(data: CreateUserModel, tenantId: string) {
     const tenant = await prisma.tenant.findUnique({
       where: { id: tenantId },
       select: { name: true }
     });
 
-    if(!tenant) throw new Error("A empresa informada não existe")
+    if (!tenant) throw new Error("A empresa informada não existe");
+
+    // 1. Verificar se o usuário já existe no sistema global
+    const exitingUser = await prisma.user.findUnique({
+      where: { email: data.email }
+    });
 
     const { token, tokenHash } = generateEmailToken();
 
-    const newUser = await prisma.$transaction(async (tx) => {
-      const user = await tx.user.create(
-        {
-          data: {
-            name: data.name,
-            email: data.email,
-            role: data.role,
-            tenantId: tenantId.trim(),
-            responsibleId: responsibleId.trim(),
-            emailVerified: false // Usuário começa como não verificado
-          }
+    const result = await prisma.$transaction(async (tx) => {
+      const userRecord = exitingUser || await tx.user.create({
+        data: { email: data.email}
+      });
+      const existingTenantMemberships = await tx.memberships.findUnique({
+        where: {
+          userId_tenantId: { userId: userRecord.id, tenantId }
+        }
+      });
+      await tx.memberships.updateMany({
+        where: {
+          userId: userRecord.id,
+          tenantId: {not: tenantId},
+          state: "ACTIVE",
+          // role: "USER"
         },
-
-      );
-
-      // Cria o registro na tabela de verificação
-      await tx.emailVerification.create({
         data: {
-          email: user.email,
+          state: "DISABLED"
+        }
+      })
+
+      let member;
+      if(existingTenantMemberships) {
+        if(existingTenantMemberships.state === "ACTIVE") {
+          throw new Error("Este usuário já se encontra ativo no sistema.");
+        }
+        member = await tx.memberships.update({
+          where: {id: existingTenantMemberships.id},
+          data: {
+            state: "ACTIVE",
+            name: data.name,
+            role: "USER"
+          }
+        })
+      } else {
+        member = await tx.memberships.create({
+          data: {
+            name: data.name, // Nome que o admin deu ao membro
+            role: "USER",
+            state: "ACTIVE", // Ou PENDING se quiser validar e-mail
+            tenantId: tenantId,
+            userId: userRecord.id
+          }
+        });
+      }
+
+
+      // 5. Registro de Verificação (apenas se for usuário novo ou e-mail pendente)
+      await tx.emailVerification.upsert({
+        where: { email: userRecord.email, type: "USER" },
+        update: {
           tokenHash,
-          type: "USER", // Tipo diferente para diferenciar do Responsible se necessário
-          userId: user.id,
-          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 horas
+          verified: false,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24)
+        },
+        create: {
+          email: userRecord.email,
+          tokenHash,
+          type: "USER",
+          userId: userRecord.id,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24)
         }
       });
 
-      return user;
+      return { user: userRecord, member };
     });
 
     const tenantName = tenant?.name || "Nossa Plataforma";
-    const verificationLink = `${process.env.APP_URL}/verify-email?token=${token}&type=user&email=${newUser.email}&tenant=${tenantId}&responsible=${responsibleId}`;
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashEmail = await bcrypt.hash(result.user.email, salt);
+    const verificationLink = `${process.env.APP_URL}/verify-email-member?token=${token}&type=user&em=${hashEmail}&tId=${tenantId}&uId=${result.user.id}`;
 
     try {
       await mailer.sendMail({
         from: `"Equipe do Sistema" <${process.env.MAIL_FROM}>`,
-        to: newUser.email,
+        to: result.user.email,
         subject: "Convite para a Plataforma",
         html: `
           <div style="background-color: #f8fafc; padding: 40px 20px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
             <div style="max-width: 550px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;">
               <div style="padding: 30px 40px 10px 40px; text-align: left;">
-                <h1 style="color: #1e293b; font-size: 22px; font-weight: 700; margin: 0;">Olá, ${newUser.name}! 👋</h1>
+                <h1 style="color: #1e293b; font-size: 22px; font-weight: 700; margin: 0;">Olá,  👋</h1>
               </div>
               <div style="padding: 0 40px 30px 40px;">
                 <p style="color: #475569; font-size: 16px; line-height: 1.6;">
@@ -111,7 +157,7 @@ export class UserService {
       console.error("Erro ao enviar e-mail:", mailError)
     }
     
-    return newUser;
+    return result;
   }
 
   async updateUserCreateAccount(data: UpdateUserCreateAccountModel, email: string) {
@@ -120,21 +166,31 @@ export class UserService {
 
     const result = await prisma.$transaction(async (tx) => {
       const currentUser = await tx.user.findUnique({
-            where: { email },
-            include: { 
-                tenant: true,
-                responsible: true // Certifique-se que a relação existe no seu schema.prisma
+        where: { email },
+        include: { 
+          memberships: {
+            where: {state: "ACTIVE"},
+            include: {
+              tenant: {
+                include: {
+                  responsible: true
+                }
+              }
             }
-        });
+          }
+        }
+      });
 
-        if (!currentUser) throw new Error("Usuário não encontrado.");
-      
+      if (!currentUser) throw new Error("Usuário não encontrado.");
+
+      const activeMembership = currentUser.memberships[0];
+      if (!activeMembership) throw new Error("Nenhum vínculo ativo encontrado para este usuário.");
+    
       const updateUserAccount = await tx.user.update({
         where: {email: email},
         data: {
           username: data.username,
           password: hashPassword,
-          emailVerified: true
         }
       });
 
@@ -150,15 +206,15 @@ export class UserService {
       
       await tx.notificationEmail.create({
         data: {
-          tenantId: updateUserAccount.tenantId,
-          content: `O usuário ${updateUserAccount.name} acabou de ativar a conta!`
+          tenantId: activeMembership.tenantId,
+          content: `O usuário ${activeMembership.name} acabou de ativar a conta!`
         }
       })
 
       return {
         user: updateUserAccount,
-        responsibleEmail: currentUser.responsible?.email,
-        tenantName: currentUser.tenant?.name || "Nossa Plataforma",
+        responsibleEmail: activeMembership.tenant.responsible?.email,
+        tenantName: activeMembership.tenant.name || "Nossa Plataforma",
         verificationEmail: emailVerification?.verified || false
       }
     });

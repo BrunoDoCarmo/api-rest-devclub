@@ -33,6 +33,11 @@ export type Responsible = Prisma.ResponsibleModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model Memberships
+ * 
+ */
+export type Memberships = Prisma.MembershipsModel
+/**
  * Model EmailVerification
  * 
  */
@@ -42,13 +47,3 @@ export type EmailVerification = Prisma.EmailVerificationModel
  * 
  */
 export type NotificationEmail = Prisma.NotificationEmailModel
-/**
- * Model Company_Data
- * 
- */
-export type Company_Data = Prisma.Company_DataModel
-/**
- * Model Customer
- * 
- */
-export type Customer = Prisma.CustomerModel

@@ -63,57 +63,58 @@ export function Navbar() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/private/user/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await response.json();
-      const nameToShow = data.user?.name || data.name
 
-      if (nameToShow) {
-        setUserName(data.name);
-      } else if (response.status === 401) {
+      if (response.status === 401) {
         logoutAction();
+        return;
       }
+
+      if (!response.ok) throw new Error("Falha ao buscar perfil");
+
+      const data = await response.json();
+
+      // Sincroniza o estado da Navbar com os dados REAIS do banco
+      if (data.name) setUserName(data.name);
+      if (data.role) setUserRole(data.role.toUpperCase());
+      if (data.type) setIsPJ(data.type === "LEGAL");
+
     } catch (error) {
       console.error("Erro ao buscar perfil:", error);
     }
   }, [logoutAction]);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
 
   const syncAuthState = useCallback(() => {
     const token = Cookies.get("token");
 
     if (!token) {
       setIsLoggedIn(false);
-      setUserName("");
-      setIsPJ(false);
-      setUserRole(null);
       return;
     }
 
     setIsLoggedIn(true);
     try {
         const decoded = jwtDecode<CustomJwtPayload>(token);
+        // Primeiro, preenchemos com o que tem no Token (mais rápido)
         if (decoded.name) setUserName(decoded.name);
-        if (decoded.type) {
-          setIsPJ(decoded.type === "LEGAL");
-        }        
-        if (decoded.role) {
-          setUserRole(decoded.role);
+        if (decoded.role) setUserRole(decoded.role.toUpperCase());
+        if (decoded.type) setIsPJ(decoded.type === "LEGAL");
+
+        // Depois, buscamos no banco para garantir dados atualizados (mais seguro)
+        if (!isAuthPage) {
+          fetchUserProfile(token);
         }
     } catch (e) {
         console.error("Token malformado", e);
+        logoutAction();
     }
+  }, [fetchUserProfile, isAuthPage, logoutAction]);
 
-    if (!isAuthPage) {
-      fetchUserProfile(token);
-    }
-  }, [fetchUserProfile, isAuthPage]);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (mounted) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         syncAuthState();
     }
     window.addEventListener("storage", syncAuthState);
@@ -169,7 +170,7 @@ export function Navbar() {
                 <div className="flex items-center gap-6 pr-6 border-r border-zinc-800">
                 {nav_links
                   .filter(link => {
-                    const isAllowedRole = !link.adminOnly || userRole?.toUpperCase() === "ADMIN";
+                    const isAllowedRole = !link.adminOnly || userRole === "ADMIN";
                     const isAllowedTenant = !link.tenantTypePJ || isPJ;
                     return isAllowedRole && isAllowedTenant;
                   })

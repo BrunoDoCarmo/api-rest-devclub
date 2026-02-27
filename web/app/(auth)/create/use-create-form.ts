@@ -20,20 +20,24 @@ interface CnpjData {
 }
 
 export const useCreateForm = () => {
-  const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const [activeTab, setActiveTab] = useState(0);
+  const [responsibleTab, setResponsibleTab] = useState(0);
+  const [userTab, setUserTab] = useState(0);
+  
   const [modal, setModal] = useState({ open: false, type: "success" as "success" | "error", message: "" });
 
-  const [tenant, setTenant] = useState({ name: "", type: "", size: "", });
+  const [tenant, setTenant] = useState({ name: "", type: "", size: "" });
   const [responsible, setResponsible] = useState({
     name: "", cpf: "", cnpj: "", public_place: "", number: "",
     neighborhood: "", complement: "", cep: "", city: "", uf: "",
     telephone1: "", telephone2: "", cell_phone1: "", cell_phone2: "", email: ""
   });
-  const [responsibleTab, setResponsibleTab] = useState(0);
-  const [user, setUser] = useState({ name: "", email: "", username: "", password: "" });
+  const [user, setUser] = useState({ email: "", username: "", password: "" });
+  const [memberships, setMemberships] = useState({ name: "" });
 
-  const isTenantValid = tenant.name && tenant.type && (tenant.type === "PHYSICAL" || tenant.size);
+  const isTenantValid = tenant.name && tenant.type && (tenant.type === "PHYSICAL" || tenant.size);  
   const isResponsibleValid = () => {
     const { name, cpf, cnpj, public_place, number, cep, city, uf, email, cell_phone1 } = responsible;
     if (responsibleTab === 0) return name && (tenant.type === "PHYSICAL" ? cpf : cnpj);
@@ -41,12 +45,15 @@ export const useCreateForm = () => {
     if (responsibleTab === 2) return email && cell_phone1;
     return false;
   }
-  const isUserValid = user.username && user.email && user.password;
+  const isUserValid = () => {
+    if (userTab === 0) return memberships.name
+    if (userTab === 1) return user.username && user.email && user.password;
+  }
 
   const canAdvance = () => {
     if (activeTab === 0) return isTenantValid;
     if (activeTab === 1) return isResponsibleValid();
-    if (activeTab === 2) return isUserValid;
+    if (activeTab === 2) return isUserValid();
     return false;
   };
 
@@ -54,19 +61,35 @@ export const useCreateForm = () => {
     setLoading(true);
     try {
       const payload = {
-        tenant: { ...tenant, ...(tenant.type === "PHYSICAL" && { name: "EMPRESA PESSOA FISICA" }) },
-        responsible: { 
-            ...responsible, 
-            cpf: tenant.type === "PHYSICAL" ? responsible.cpf : null, 
-            cnpj: tenant.type === "LEGAL" ? responsible.cnpj : null 
+        tenant: {
+          ...tenant,
+          name: tenant.type === "PHYSICAL" ? "EMPRESA PESSOA FISICA" : tenant.name.toUpperCase(), 
+          type: tenant.type === "PHYSICAL" ? "PHYSICAL" : tenant.type
         },
-        user
+        responsible: { 
+            ...responsible,
+            name: responsible.name.toUpperCase(),
+            email: responsible.email.toLowerCase(),
+            cpf: tenant.type === "PHYSICAL" ? responsible.cpf.replace(/\D/g, "") : null, 
+            cnpj: tenant.type === "LEGAL" ? responsible.cnpj.replace(/\D/g, "") : null
+        },
+        user: {
+          ...user,
+          name: memberships.name,
+          email: user.email.toLowerCase(), // Força minúsculo
+          username: user.username.toLowerCase()
+        },
+        memberships: {
+          ...memberships,
+          name: memberships.name.toUpperCase(),
+        }
       };
+      console.log(payload)
       await signup(payload);
       setModal({ open: true, type: "success", message: "Cadastro realizado com sucesso!" });
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Erro inesperado ao realizar cadastro";
-      setModal({ open: true, type: "error", message: errorMessage });
+    } catch (err: any) {
+      const errorMessage = err.issues?.[0]?.message || err.message || "Erro inesperado ao realizar cadastro!";
+      setModal({ open: true, type: "error", message: `ERRO: ${errorMessage}` });
     } finally {
       setLoading(false);
     }
@@ -76,11 +99,20 @@ export const useCreateForm = () => {
     if (activeTab === 0) {
       setActiveTab(1);
       setResponsibleTab(0);
-    } else if (activeTab === 1) {
+    }
+    else if (activeTab === 1) {
       if (responsibleTab < 2) {
         setResponsibleTab(prev => prev + 1);
-      } else {
+      } 
+      else {
         setActiveTab(2);
+      }
+    } 
+    else if (activeTab === 2) {
+      if (userTab < 1) {
+        setUserTab(prev => prev + 1)
+      } else {
+        setResponsibleTab(2)
       }
     }
   };
@@ -129,8 +161,8 @@ export const useCreateForm = () => {
   };
 
   return {
-    state: { tenant, responsible, user, activeTab, loading, modal, responsibleTab },
-    actions: { setTenant, setTenantWithCnpj, setResponsible, setUser, setActiveTab, setModal, handleBack, handleNext, setResponsibleTab, handleSubmit },
+    state: { tenant, responsible, user, memberships, activeTab, loading, modal, responsibleTab, userTab },
+    actions: { setTenant, setTenantWithCnpj, setResponsible, setUser, setMemberships, setActiveTab, setModal, handleBack, handleNext, setResponsibleTab, setUserTab, handleSubmit },
     validators: { isTenantValid, isUserValid, canAdvance: canAdvance() }
   };
 };

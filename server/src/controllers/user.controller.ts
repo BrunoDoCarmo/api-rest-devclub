@@ -26,9 +26,8 @@ export async function listUsersController(req: Request, res: Response) {
 export async function createUserController(req: Request, res: Response) {
   try {
     const tenantId = String(req.body.tenantId).trim();
-    const responsibleId = String(req.body.responsibleId).trim();
 
-    if (!tenantId || !responsibleId) {
+    if (!tenantId) {
       return res.status(401).json({ message: "Empresa ou responsável não identificado." });
     }
     const result = createUserModel.safeParse(req.body);
@@ -40,11 +39,11 @@ export async function createUserController(req: Request, res: Response) {
       })
     }
 
-    const user = await userService.createUser(result.data, tenantId, responsibleId)
+    const { user, member } = await userService.createUser(result.data, tenantId)
 
     return res.status(201).json({
       message: "Membro criado com sucesso",
-      user: {id: user.id, name: user.name, email: user.email}
+      user: {id: user.id, name: member.name, email: user.email}
     })
   } catch (error: any) {
     if(error.code === 'P2002') {

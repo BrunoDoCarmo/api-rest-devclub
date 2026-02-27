@@ -3,8 +3,8 @@ import { prisma } from "../lib/prisma";
 import { generateEmailToken } from "../utils/email-token";
 import { mailer } from "../lib/mail";
 
-export class TenantResponsibleUserService {
-  async create(tenant: any, responsible: any, user: any) {
+export class TenantResponsibleUserMembershipsService {
+  async create(tenant: any, responsible: any, user: any, memberships:any) {
     
     const cpf = responsible.cpf ? responsible.cpf.replace(/\D/g, "") : null;
     const cnpj = responsible.cnpj ? responsible.cnpj.replace(/\D/g, "") : null;
@@ -48,16 +48,23 @@ export class TenantResponsibleUserService {
           tenantId: createdTenant.id,
         },
       });
-            
+
+      
       const createdUser = await tx.user.create({
         data: {
-          name: user.name,
           email: user.email,
           username: user.username,
           password: hashPassword,
+        }
+      })
+
+      const createdMemberships = await tx.memberships.create({
+        data: {
+          name: memberships.name,
           role: "ADMIN",
           tenantId: createdTenant.id,
-          responsibleId: null
+          emailVerified: false,
+          userId: createdUser.id
         }
       })
     
@@ -76,10 +83,11 @@ export class TenantResponsibleUserService {
         createdTenant,
         createdResponsible,
         createdUser,
+        createdMemberships,
       };
     });
 
-    const verificationLink = `${process.env.APP_URL}/verify-email?token=${token}&type=responsible`;
+    const verificationLink = `${process.env.APP_URL}/verify-email-admin?token=${token}&type=responsible`;
     await mailer.sendMail({
       from: `"Equipe do Sistema" <${process.env.MAIL_FROM}>`,
       to: result.createdUser.email,

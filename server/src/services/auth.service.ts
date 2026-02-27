@@ -2,20 +2,8 @@ import { prisma } from "../lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-interface LoginResult {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    type?: string;
-    role: string;
-    tenantName: string;
-  };
-  token: string;
-}
-
 export class AuthService {
-  async login(identifier: string, password: string): Promise<LoginResult> {
+  async login(identifier: string, password: string) {
     if (!identifier || !password) {
       throw new Error("Credenciais inválidas");
     }
@@ -26,67 +14,71 @@ export class AuthService {
       },
       include: {
         emailVerifications: true,
-        responsible: true, 
-        tenant: true,       
+        memberships: {
+          where: { state: "ACTIVE"},
+          include: {
+            tenant: {
+              include: { responsible: true }
+            }
+          }
+        },
       }
-    }).catch(err => {
-      console.error("Falha ao conectar no banco:", err.message);
-      throw new Error("O banco de dados demorou a responder. Por favor, tente novamente.");
     });
 
-    if (!user) {
+    if (!user || !user.password) {
       throw new Error("Usuário ou senha inválidos");
     }
-    const isEmailVerified = user.emailVerifications.some(v => v.verified === true); 
-    // Ou: const isEmailVerified = user.emailVerifications.some(v => v.verifiedAt !== null);
 
-    if (!isEmailVerified) {
-      throw new Error("E-mail não verificado. Por favor, valide seu e-mail para acessar.");
-    }
-
-    const responsible = user.responsible;
-    if (responsible && responsible.state === "DISABLED") {
-      throw new Error("Acesso negado. O responsável associado a este usuário está desativado.");
-    }
-
-    const userState = user.state;
-    if(userState === "DISABLED") {
-      throw new Error("Acesso negado. Usuário desativado.");
-    }
-
+    // 1. Verificação de Senha (melhor fazer antes das checagens de estado)
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new Error("Usuário ou senha inválidos");
     }
 
-    if (!process.env.JWT_ACCESS_SECRET) {
-      throw new Error("JWT_ACCESS_SECRET não configurado");
+    // 2. Validação de E-mail
+    const isEmailVerified = user.emailVerifications.some(v => v.verified === true);
+    if (!isEmailVerified) {
+      throw new Error("E-mail não verificado.");
     }
 
-    // No seu AuthService.ts
+    // 3. Pega a primeira assinatura (membership) para determinar o acesso
+    const activeMembership = user.memberships.find(m => m.state === "ACTIVE");
+
+    if (!activeMembership) {
+      throw new Error("Acesso negado. Seu vínculo com a empresa anterior foi desativado ou você não possui empresas ativas.");
+    }
+
+    // 4. Validação do Responsável da Empresa (Tenant)
+    const responsible = activeMembership.tenant.responsible;
+    if (responsible && responsible.state === "DISABLED") {
+      throw new Error("Acesso negado. O responsável pela empresa está desativado.");
+    }
+    
     const secret = process.env.JWT_ACCESS_SECRET || "fallback_para_teste_apenas";
 
+    // 6. Geração do Token
     const token = jwt.sign(
       { 
         sub: user.id, 
+        name: activeMembership.name,
         email: user.email, 
-        name: user.name, 
-        tenantId: user.tenantId, 
-        tenantName: user.tenant.name, 
-        type: user.tenant.type, 
-        role: user.role
+        tenantId: activeMembership.tenantId,
+        tenantName: activeMembership.tenant.name,         
+        type: activeMembership.tenant.type, 
+        role: activeMembership.role 
       },
       secret,
+      { expiresIn: '1d' }
     );
 
     return {
       user: {
         id: user.id,
-        name: user.name,
+        name: activeMembership.name,
         email: user.email,
-        type: user.tenant?.type,
-        role: user.role,
-        tenantName: user.tenant?.name
+        type: activeMembership.tenant.type,
+        role: activeMembership.role,
+        tenantName: activeMembership.tenant.name
       },
       token,
     };

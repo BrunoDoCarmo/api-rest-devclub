@@ -208,23 +208,6 @@ export type EnumEmailVerificationTypeWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumEmailVerificationTypeFilter<$PrismaModel>
 }
 
-export type EnumRegimeFilter<$PrismaModel = never> = {
-  equals?: $Enums.Regime | Prisma.EnumRegimeFieldRefInput<$PrismaModel>
-  in?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumRegimeFilter<$PrismaModel> | $Enums.Regime
-}
-
-export type EnumRegimeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Regime | Prisma.EnumRegimeFieldRefInput<$PrismaModel>
-  in?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumRegimeWithAggregatesFilter<$PrismaModel> | $Enums.Regime
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumRegimeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumRegimeFilter<$PrismaModel>
-}
-
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -430,23 +413,6 @@ export type NestedEnumEmailVerificationTypeWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEmailVerificationTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEmailVerificationTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumRegimeFilter<$PrismaModel = never> = {
-  equals?: $Enums.Regime | Prisma.EnumRegimeFieldRefInput<$PrismaModel>
-  in?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumRegimeFilter<$PrismaModel> | $Enums.Regime
-}
-
-export type NestedEnumRegimeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Regime | Prisma.EnumRegimeFieldRefInput<$PrismaModel>
-  in?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Regime[] | Prisma.ListEnumRegimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumRegimeWithAggregatesFilter<$PrismaModel> | $Enums.Regime
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumRegimeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumRegimeFilter<$PrismaModel>
 }
 
 

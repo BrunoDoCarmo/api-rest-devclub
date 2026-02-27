@@ -25,13 +25,16 @@ export interface SignupResponsibleDTO {
 }
 
 export interface SignupUserDTO {
-  name: string;
+  email: string;
   username: string;
   password: string;
-  email: string;
+}
+export interface SignupMembershipsDTO {
+  name: string;
 }
 
 export interface SignupDTO {
   responsible: SignupResponsibleDTO;
   user: SignupUserDTO;
+  memberships: SignupMembershipsDTO
 }

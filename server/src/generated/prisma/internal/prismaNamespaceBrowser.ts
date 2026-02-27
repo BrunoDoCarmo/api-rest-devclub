@@ -54,10 +54,9 @@ export const ModelName = {
   Tenant: 'Tenant',
   Responsible: 'Responsible',
   User: 'User',
+  Memberships: 'Memberships',
   EmailVerification: 'EmailVerification',
-  NotificationEmail: 'NotificationEmail',
-  Company_Data: 'Company_Data',
-  Customer: 'Customer'
+  NotificationEmail: 'NotificationEmail'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -121,16 +120,24 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  role: 'role',
-  state: 'state',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  tenantId: 'tenantId',
-  responsibleId: 'responsibleId',
-  emailVerified: 'emailVerified'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const MembershipsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  state: 'state',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  emailVerified: 'emailVerified'
+} as const
+
+export type MembershipsScalarFieldEnum = (typeof MembershipsScalarFieldEnum)[keyof typeof MembershipsScalarFieldEnum]
 
 
 export const EmailVerificationScalarFieldEnum = {
@@ -156,63 +163,6 @@ export const NotificationEmailScalarFieldEnum = {
 } as const
 
 export type NotificationEmailScalarFieldEnum = (typeof NotificationEmailScalarFieldEnum)[keyof typeof NotificationEmailScalarFieldEnum]
-
-
-export const Company_DataScalarFieldEnum = {
-  id: 'id',
-  company_name: 'company_name',
-  fantasy: 'fantasy',
-  cnpj: 'cnpj',
-  ie: 'ie',
-  public_place: 'public_place',
-  number: 'number',
-  neighborhood: 'neighborhood',
-  complement: 'complement',
-  cep: 'cep',
-  city: 'city',
-  uf: 'uf',
-  telephone1: 'telephone1',
-  telephone2: 'telephone2',
-  cell_phone1: 'cell_phone1',
-  cell_phone2: 'cell_phone2',
-  email: 'email',
-  site: 'site',
-  state: 'state',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  responsibleId: 'responsibleId'
-} as const
-
-export type Company_DataScalarFieldEnum = (typeof Company_DataScalarFieldEnum)[keyof typeof Company_DataScalarFieldEnum]
-
-
-export const CustomerScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  cpf: 'cpf',
-  cnpj: 'cnpj',
-  ie: 'ie',
-  regime: 'regime',
-  public_place: 'public_place',
-  number: 'number',
-  neighborhood: 'neighborhood',
-  complement: 'complement',
-  cep: 'cep',
-  city: 'city',
-  uf: 'uf',
-  telephone1: 'telephone1',
-  telephone2: 'telephone2',
-  cell_phone1: 'cell_phone1',
-  cell_phone2: 'cell_phone2',
-  email: 'email',
-  contact: 'contact',
-  state: 'state',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  responsibleId: 'responsibleId'
-} as const
-
-export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
 export const SortOrder = {

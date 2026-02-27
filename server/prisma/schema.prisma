@@ -10,14 +10,14 @@ datasource db {
 model Tenant {
   id        String           @id @default(uuid())
   type      Type_Responsible
-  name      String //NOME
-  size      Size //TAMANHO
+  name      String
+  size      Size
   cnpj      String?          @unique
-  createdAt DateTime         @default(now()) //DATA CRIACAO
-  updatedAt DateTime         @updatedAt //DATA ALTERACAO
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 
-  responsible        Responsible? //RESPONSAVEL
-  user               User[] //USUARIO
+  responsible        Responsible?
+  memberships        Memberships[]
   notificationEmails NotificationEmail[]
 
   @@map("tenant")
@@ -25,61 +25,59 @@ model Tenant {
 
 model Responsible {
   id           String   @id @default(uuid())
-  name         String //NOME
+  name         String
   cpf          String?  @unique
   cnpj         String?  @unique
-  public_place String //LOGRADOURO
-  number       String //NUMERO
-  neighborhood String //BAIRRO
-  complement   String? //COMPLEMENTO
+  public_place String
+  number       String
+  neighborhood String
+  complement   String?
   cep          String
-  city         String //CIDADE
+  city         String
   uf           String
-  telephone1   String? //TELEFONE1
-  telephone2   String? //TELEFONE2
-  cell_phone1  String //CELULAR1
-  cell_phone2  String? //CELULAR2
+  telephone1   String?
+  telephone2   String?
+  cell_phone1  String
+  cell_phone2  String?
   email        String   @unique
-  state        State    @default(ACTIVE) //ESTADO
-  createdAt    DateTime @default(now()) //DATA CRIACAO
-  updatedAt    DateTime @updatedAt //DATA ALTERACAO
+  state        State    @default(ACTIVE)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   tenant   Tenant @relation(fields: [tenantId], references: [id])
   tenantId String @unique
-
-  companies_data Company_Data[]
-  customers      Customer[]
 
   @@map("responsible")
 }
 
 model User {
   id        String   @id @default(uuid())
-  email     String   @unique
-  username  String?  @unique //NOME DE USUARIO
-  password  String? //SENHA
+  name      String?
+  email     String?
+  username  String?  @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  memberships Memberships[]
+  memberships        Memberships[]
+  emailVerifications EmailVerification[]
 
-  createdAt DateTime @default(now()) //DATA CRIACAO
-  updatedAt DateTime @updatedAt //DATA ALTERACAO
   @@map("user")
 }
 
 model Memberships {
-  id String @id @default(uuid())
-  name      String //NOME
-  role      UserRole @default(USER)
-  state     State    @default(ACTIVE) //ESTADO
+  id    String   @id @default(uuid())
+  name  String
+  role  UserRole @default(USER)
+  state State    @default(ACTIVE)
 
   userId String
-  user User @relation(fields: userId, references: [id])
+  user   User   @relation(fields: userId, references: [id])
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
-  
-  emailVerified      Boolean             @default(false)
-  emailVerifications EmailVerification[]
+
+  emailVerified Boolean @default(false)
 
   @@unique([userId, tenantId])
   @@map("memberships")
@@ -112,74 +110,15 @@ model NotificationEmail {
   tenant Tenant @relation(fields: [tenantId], references: [id])
 }
 
-model Company_Data {
-  id           String   @id @default(uuid())
-  company_name String //RAZAO SOCIAL
-  fantasy      String //FANTASIA
-  cnpj         String   @unique
-  ie           String?
-  public_place String //LOGRADOURO
-  number       String //NUMERO
-  neighborhood String //BAIRRO
-  complement   String? //COMPLEMENTO
-  cep          String
-  city         String //CIDADE
-  uf           String
-  telephone1   String? //TELEFONE1
-  telephone2   String? //TELEFONE2
-  cell_phone1  String //CELULAR1
-  cell_phone2  String? //CELULAR2
-  email        String
-  site         String?
-  state        State    @default(ACTIVE) //ESTADO
-  createdAt    DateTime @default(now()) //DATA CRIACAO
-  updatedAt    DateTime @updatedAt //DATA ALTERACAO
-
-  responsible   Responsible @relation(fields: [responsibleId], references: [id])
-  responsibleId String
-
-  @@map("company_data")
-}
-
-model Customer {
-  id           String   @id @default(uuid())
-  name         String //NOME
-  cpf          String?  @unique
-  cnpj         String?  @unique
-  ie           String?
-  regime       Regime   @default(ICMS_TAXPAYER)
-  public_place String //LOGRADOURO
-  number       String //NUMERO
-  neighborhood String //BAIRRO
-  complement   String? //COMPLEMENTO
-  cep          String
-  city         String //CIDADE
-  uf           String
-  telephone1   String? //TELEFONE1
-  telephone2   String? //TELEFONE2
-  cell_phone1  String //CELULAR1
-  cell_phone2  String? //CELULAR2
-  email        String
-  contact      String? //CONTATO
-  state        State    @default(ACTIVE) //ESTADO
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  responsible   Responsible @relation(fields: [responsibleId], references: [id])
-  responsibleId String
-
-  @@map("customer")
-}
-
 enum Type_Responsible {
-  PHYSICAL //FISICA
-  LEGAL //JURIDICA
+  PHYSICAL
+  LEGAL
 }
 
 enum Size {
-  SMALL //PEQUENO
-  MEDIUM //MEDIO
-  LARGE //GRANDE
+  SMALL
+  MEDIUM
+  LARGE
 }
 
 enum UserRole {
@@ -193,13 +132,7 @@ enum EmailVerificationType {
 }
 
 enum State {
-  ACTIVE //ATIVO
-  DISABLED //DESATIVADO
-  DELETED //DELETADO
-}
-
-enum Regime {
-  ICMS_TAXPAYER //CONTRIBUINTE DE ICMS
-  EXEMPT_FROM_REGISTRATION //ISENTO DE INSCRICAO
-  NON_TAXPAYER //NAO CONTRIBUINTE
+  ACTIVE
+  DISABLED
+  DELETED
 }

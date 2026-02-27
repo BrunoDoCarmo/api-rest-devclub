@@ -49,12 +49,3 @@ export const State = {
 } as const
 
 export type State = (typeof State)[keyof typeof State]
-
-
-export const Regime = {
-  ICMS_TAXPAYER: 'ICMS_TAXPAYER',
-  EXEMPT_FROM_REGISTRATION: 'EXEMPT_FROM_REGISTRATION',
-  NON_TAXPAYER: 'NON_TAXPAYER'
-} as const
-
-export type Regime = (typeof Regime)[keyof typeof Regime]

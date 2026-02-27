@@ -17,24 +17,33 @@ router.get("/me", authMiddleware, async (req, res) => {
             where: { 
                 id: userId 
             },
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                role: true,
-                tenant: {
-                    select: { name: true, type: true }
+            include: {
+                memberships: {
+                    where: { state: "ACTIVE" }, // Pega apenas o vínculo ativo
+                    include: {
+                        tenant: true
+                    }
                 }
-            },
+            }
         });
 
         if (!user) {
             return res.status(404).json({ message: "Usuário não encontrado no banco de dados" });
         }
 
+        const activeMembership = user.memberships[0];
+
+        // Retornamos exatamente o que a interface MeResponse espera
         return res.json({
-            user: { id: user.id, name: user.name, email: user.email, role: user.role },
-            tenant: user.tenant || { name: "Sem Empresa", type: "N/A" }
+            user: { 
+                id: user.id, 
+                name: activeMembership?.name, 
+                role: activeMembership?.role || "USER" 
+            },
+            tenant: { 
+                name: activeMembership?.tenant?.name || "Sem Empresa", 
+                type: activeMembership?.tenant?.type || "PHYSICAL" 
+            }
         });
     } catch (error: any) {
         console.error("Erro no /me:", error.message);
@@ -42,4 +51,3 @@ router.get("/me", authMiddleware, async (req, res) => {
     }
 });
 export default router;
-

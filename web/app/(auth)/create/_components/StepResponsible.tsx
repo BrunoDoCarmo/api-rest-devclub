@@ -62,7 +62,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder={type === "LEGAL" ? "Ex: Empresa LTDA" : "Ex: João da Silva"} 
                   value={data.name || ""} 
                   onChange={(e) => onChange({ ...data, name: e.target.value })}
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="Nome da rua" 
                   value={data.public_place} 
                   onChange={(e) => onChange({ ...data, public_place: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -112,7 +112,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="Nº" 
                   value={data.number} 
                   onChange={(e) => onChange({ ...data, number: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -126,7 +126,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="Apto, Bloco, etc." 
                   value={data.complement} 
                   onChange={(e) => onChange({ ...data, complement: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -140,7 +140,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="00000-000" 
                   value={formatCEP(data.cep || "")} 
                   onChange={(e) => onChange({ ...data, cep: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -154,7 +154,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="Seu bairro" 
                   value={data.neighborhood} 
                   onChange={(e) => onChange({ ...data, neighborhood: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -168,7 +168,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
                   placeholder="Sua cidade" 
                   value={data.city} 
                   onChange={(e) => onChange({ ...data, city: e.target.value })} 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white uppercase"
                 />
               </div>
             </div>
@@ -201,7 +201,7 @@ export const StepResponsible = ({ data, type, onChange, activeSubTab }: StepResp
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
                 <Input 
-                  className="pl-10 bg-white"
+                  className="pl-10 bg-white lowercase"
                   placeholder="email@exemplo.com" 
                   value={data.email} 
                   onChange={(e) => onChange({ ...data, email: e.target.value })} 

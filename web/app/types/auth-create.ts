@@ -13,8 +13,8 @@ export interface ResponsibleData {
   cnpj: string;
   public_place: string;
   number: string;
-  neighborhood: string;
   complement: string;
+  neighborhood: string;
   cep: string;
   city: string;
   uf: string;
@@ -29,6 +29,11 @@ export interface ResponsibleData {
 export interface UserData {
   name: string;
   email: string;
+  username: string;
+  password: string;
+}
+export interface MembershipsData {
+  name: string;
 }
 export interface UpdateUserCreateAccount {
   tenantId: string;

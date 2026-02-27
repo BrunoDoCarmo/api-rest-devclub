@@ -199,7 +199,7 @@ export type TenantWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   responsible?: Prisma.XOR<Prisma.ResponsibleNullableScalarRelationFilter, Prisma.ResponsibleWhereInput> | null
-  user?: Prisma.UserListRelationFilter
+  memberships?: Prisma.MembershipsListRelationFilter
   notificationEmails?: Prisma.NotificationEmailListRelationFilter
 }
 
@@ -212,7 +212,7 @@ export type TenantOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   responsible?: Prisma.ResponsibleOrderByWithRelationInput
-  user?: Prisma.UserOrderByRelationAggregateInput
+  memberships?: Prisma.MembershipsOrderByRelationAggregateInput
   notificationEmails?: Prisma.NotificationEmailOrderByRelationAggregateInput
 }
 
@@ -228,7 +228,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   responsible?: Prisma.XOR<Prisma.ResponsibleNullableScalarRelationFilter, Prisma.ResponsibleWhereInput> | null
-  user?: Prisma.UserListRelationFilter
+  memberships?: Prisma.MembershipsListRelationFilter
   notificationEmails?: Prisma.NotificationEmailListRelationFilter
 }, "id" | "cnpj">
 
@@ -267,7 +267,7 @@ export type TenantCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleCreateNestedOneWithoutTenantInput
-  user?: Prisma.UserCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsCreateNestedManyWithoutTenantInput
   notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
@@ -280,7 +280,7 @@ export type TenantUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleUncheckedCreateNestedOneWithoutTenantInput
-  user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsUncheckedCreateNestedManyWithoutTenantInput
   notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
@@ -293,7 +293,7 @@ export type TenantUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUpdateOneWithoutTenantNestedInput
-  user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUpdateManyWithoutTenantNestedInput
   notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
@@ -306,7 +306,7 @@ export type TenantUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUncheckedUpdateOneWithoutTenantNestedInput
-  user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUncheckedUpdateManyWithoutTenantNestedInput
   notificationEmails?: Prisma.NotificationEmailUncheckedUpdateManyWithoutTenantNestedInput
 }
 
@@ -409,18 +409,18 @@ export type TenantUpdateOneRequiredWithoutResponsibleNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutResponsibleInput, Prisma.TenantUpdateWithoutResponsibleInput>, Prisma.TenantUncheckedUpdateWithoutResponsibleInput>
 }
 
-export type TenantCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.TenantCreateWithoutUserInput, Prisma.TenantUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutUserInput
+export type TenantCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMembershipsInput
   connect?: Prisma.TenantWhereUniqueInput
 }
 
-export type TenantUpdateOneRequiredWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.TenantCreateWithoutUserInput, Prisma.TenantUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutUserInput
-  upsert?: Prisma.TenantUpsertWithoutUserInput
+export type TenantUpdateOneRequiredWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.TenantUpsertWithoutMembershipsInput
   connect?: Prisma.TenantWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutUserInput, Prisma.TenantUpdateWithoutUserInput>, Prisma.TenantUncheckedUpdateWithoutUserInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutMembershipsInput, Prisma.TenantUpdateWithoutMembershipsInput>, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
 }
 
 export type TenantCreateNestedOneWithoutNotificationEmailsInput = {
@@ -445,7 +445,7 @@ export type TenantCreateWithoutResponsibleInput = {
   cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user?: Prisma.UserCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsCreateNestedManyWithoutTenantInput
   notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
@@ -457,7 +457,7 @@ export type TenantUncheckedCreateWithoutResponsibleInput = {
   cnpj?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsUncheckedCreateNestedManyWithoutTenantInput
   notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
@@ -485,7 +485,7 @@ export type TenantUpdateWithoutResponsibleInput = {
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUpdateManyWithoutTenantNestedInput
   notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
@@ -497,11 +497,11 @@ export type TenantUncheckedUpdateWithoutResponsibleInput = {
   cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUncheckedUpdateManyWithoutTenantNestedInput
   notificationEmails?: Prisma.NotificationEmailUncheckedUpdateManyWithoutTenantNestedInput
 }
 
-export type TenantCreateWithoutUserInput = {
+export type TenantCreateWithoutMembershipsInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
@@ -513,7 +513,7 @@ export type TenantCreateWithoutUserInput = {
   notificationEmails?: Prisma.NotificationEmailCreateNestedManyWithoutTenantInput
 }
 
-export type TenantUncheckedCreateWithoutUserInput = {
+export type TenantUncheckedCreateWithoutMembershipsInput = {
   id?: string
   type: $Enums.Type_Responsible
   name: string
@@ -525,23 +525,23 @@ export type TenantUncheckedCreateWithoutUserInput = {
   notificationEmails?: Prisma.NotificationEmailUncheckedCreateNestedManyWithoutTenantInput
 }
 
-export type TenantCreateOrConnectWithoutUserInput = {
+export type TenantCreateOrConnectWithoutMembershipsInput = {
   where: Prisma.TenantWhereUniqueInput
-  create: Prisma.XOR<Prisma.TenantCreateWithoutUserInput, Prisma.TenantUncheckedCreateWithoutUserInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
 }
 
-export type TenantUpsertWithoutUserInput = {
-  update: Prisma.XOR<Prisma.TenantUpdateWithoutUserInput, Prisma.TenantUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.TenantCreateWithoutUserInput, Prisma.TenantUncheckedCreateWithoutUserInput>
+export type TenantUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutMembershipsInput, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
   where?: Prisma.TenantWhereInput
 }
 
-export type TenantUpdateToOneWithWhereWithoutUserInput = {
+export type TenantUpdateToOneWithWhereWithoutMembershipsInput = {
   where?: Prisma.TenantWhereInput
-  data: Prisma.XOR<Prisma.TenantUpdateWithoutUserInput, Prisma.TenantUncheckedUpdateWithoutUserInput>
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutMembershipsInput, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
 }
 
-export type TenantUpdateWithoutUserInput = {
+export type TenantUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -553,7 +553,7 @@ export type TenantUpdateWithoutUserInput = {
   notificationEmails?: Prisma.NotificationEmailUpdateManyWithoutTenantNestedInput
 }
 
-export type TenantUncheckedUpdateWithoutUserInput = {
+export type TenantUncheckedUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumType_ResponsibleFieldUpdateOperationsInput | $Enums.Type_Responsible
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -574,7 +574,7 @@ export type TenantCreateWithoutNotificationEmailsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleCreateNestedOneWithoutTenantInput
-  user?: Prisma.UserCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutNotificationEmailsInput = {
@@ -586,7 +586,7 @@ export type TenantUncheckedCreateWithoutNotificationEmailsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   responsible?: Prisma.ResponsibleUncheckedCreateNestedOneWithoutTenantInput
-  user?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipsUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutNotificationEmailsInput = {
@@ -614,7 +614,7 @@ export type TenantUpdateWithoutNotificationEmailsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUpdateOneWithoutTenantNestedInput
-  user?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutNotificationEmailsInput = {
@@ -626,7 +626,7 @@ export type TenantUncheckedUpdateWithoutNotificationEmailsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responsible?: Prisma.ResponsibleUncheckedUpdateOneWithoutTenantNestedInput
-  user?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipsUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -635,12 +635,12 @@ export type TenantUncheckedUpdateWithoutNotificationEmailsInput = {
  */
 
 export type TenantCountOutputType = {
-  user: number
+  memberships: number
   notificationEmails: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | TenantCountOutputTypeCountUserArgs
+  memberships?: boolean | TenantCountOutputTypeCountMembershipsArgs
   notificationEmails?: boolean | TenantCountOutputTypeCountNotificationEmailsArgs
 }
 
@@ -657,8 +657,8 @@ export type TenantCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * TenantCountOutputType without action
  */
-export type TenantCountOutputTypeCountUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserWhereInput
+export type TenantCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MembershipsWhereInput
 }
 
 /**
@@ -678,7 +678,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   responsible?: boolean | Prisma.Tenant$responsibleArgs<ExtArgs>
-  user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
+  memberships?: boolean | Prisma.Tenant$membershipsArgs<ExtArgs>
   notificationEmails?: boolean | Prisma.Tenant$notificationEmailsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
@@ -716,7 +716,7 @@ export type TenantSelectScalar = {
 export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "name" | "size" | "cnpj" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   responsible?: boolean | Prisma.Tenant$responsibleArgs<ExtArgs>
-  user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
+  memberships?: boolean | Prisma.Tenant$membershipsArgs<ExtArgs>
   notificationEmails?: boolean | Prisma.Tenant$notificationEmailsArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -727,7 +727,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Tenant"
   objects: {
     responsible: Prisma.$ResponsiblePayload<ExtArgs> | null
-    user: Prisma.$UserPayload<ExtArgs>[]
+    memberships: Prisma.$MembershipsPayload<ExtArgs>[]
     notificationEmails: Prisma.$NotificationEmailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1133,7 +1133,7 @@ readonly fields: TenantFieldRefs;
 export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   responsible<T extends Prisma.Tenant$responsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$responsibleArgs<ExtArgs>>): Prisma.Prisma__ResponsibleClient<runtime.Types.Result.GetResult<Prisma.$ResponsiblePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.Tenant$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$userArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberships<T extends Prisma.Tenant$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notificationEmails<T extends Prisma.Tenant$notificationEmailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$notificationEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1578,27 +1578,27 @@ export type Tenant$responsibleArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Tenant.user
+ * Tenant.memberships
  */
-export type Tenant$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Tenant$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the Memberships
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.MembershipsSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the Memberships
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.MembershipsOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
-  cursor?: Prisma.UserWhereUniqueInput
+  include?: Prisma.MembershipsInclude<ExtArgs> | null
+  where?: Prisma.MembershipsWhereInput
+  orderBy?: Prisma.MembershipsOrderByWithRelationInput | Prisma.MembershipsOrderByWithRelationInput[]
+  cursor?: Prisma.MembershipsWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+  distinct?: Prisma.MembershipsScalarFieldEnum | Prisma.MembershipsScalarFieldEnum[]
 }
 
 /**

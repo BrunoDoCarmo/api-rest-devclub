@@ -55,7 +55,7 @@ CREATE TABLE "responsible" (
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "username" TEXT,
     "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -116,9 +116,6 @@ CREATE UNIQUE INDEX "responsible_email_key" ON "responsible"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "responsible_tenantId_key" ON "responsible"("tenantId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_username_key" ON "user"("username");

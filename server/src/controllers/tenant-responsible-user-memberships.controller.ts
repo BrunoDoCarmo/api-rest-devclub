@@ -1,29 +1,32 @@
 import type { Request, Response } from 'express';
 import { z } from "zod"
-import { TenantResponsibleUserService } from '../services/tenant-responsible-user.service';
+import { TenantResponsibleUserMembershipsService } from '../services/tenant-responsible-user-memberships.service';
 import { createTenantModel } from '../models/tenant/create-tenant.model';
 import { createResponsibleModel } from '../models/responsible/create-responsible.model';
 import { createUserModel } from '../models/user/create-user.model';
+import { createMembershipsModel } from '../models/memberships/create-memberships.model';
 
-const service = new TenantResponsibleUserService();
+const service = new TenantResponsibleUserMembershipsService();
 
-export class TenantResponsibleUserController {
+export class TenantResponsibleUserMembershipsController {
   async create(req: Request, res: Response) {
     try {
-      const { tenant, responsible, user } = req.body;
+      const { tenant, responsible, user, memberships } = req.body;
 
-      if(!tenant || !responsible || !user) {
-        return res.status(400).json({ error: "Objeto tenant, responsible e user é obrigatório"})
+      if(!tenant || !responsible || !user || !memberships) {
+        return res.status(400).json({ error: "Objeto tenant, responsible, user e memberships é obrigatório"})
       }
 
       const tenantParsed = createTenantModel.parse(req.body.tenant)
       const responsibleParsed = createResponsibleModel.parse(req.body.responsible)
       const userParsed = createUserModel.parse(req.body.user)
+      const membershipsParsed = createMembershipsModel.parse(req.body.memberships)
       
       const result = await service.create(
         tenantParsed,
         responsibleParsed,
-        userParsed
+        userParsed,
+        membershipsParsed
       )
 
       return res.status(201).json(result);
@@ -34,15 +37,6 @@ export class TenantResponsibleUserController {
           error: "Dados inválidos",
           issues: error.issues,
         });
-      }
-
-      // Email duplicado
-      if (error.message?.includes("Email")) {
-        return res.status(409).json({ error: error.message });
-      }
-      // Username duplicado
-      if (error.message?.includes("Username")) {
-        return res.status(409).json({ error: error.message });
       }
 
       return res.status(400).json({ error: error.message });
