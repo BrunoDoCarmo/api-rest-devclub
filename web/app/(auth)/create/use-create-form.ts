@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signup } from "@/app/actions/auth-create";
+import type { MembershipsData, ResponsibleData, TenantData, UserData } from "@/app/types/auth-create";
 
 interface CnpjData {
   razao_social: string;
@@ -28,14 +29,26 @@ export const useCreateForm = () => {
   
   const [modal, setModal] = useState({ open: false, type: "success" as "success" | "error", message: "" });
 
-  const [tenant, setTenant] = useState({ name: "", type: "", size: "" });
-  const [responsible, setResponsible] = useState({
-    name: "", cpf: "", cnpj: "", public_place: "", number: "",
-    neighborhood: "", complement: "", cep: "", city: "", uf: "",
-    telephone1: "", telephone2: "", cell_phone1: "", cell_phone2: "", email: ""
+  const [tenant, setTenant] = useState<TenantData>({ name: "", type: "", size: "" });
+  const [responsible, setResponsible] = useState<ResponsibleData>({
+    name: "",
+    cpf: "",
+    cnpj: "",
+    public_place: "",
+    number: "",
+    neighborhood: "",
+    complement: "",
+    cep: "",
+    city: "",
+    uf: "",
+    telephone1: "",
+    telephone2: "",
+    cell_phone1: "",
+    cell_phone2: "",
+    email: "",
   });
-  const [user, setUser] = useState({ email: "", username: "", password: "" });
-  const [memberships, setMemberships] = useState({ name: "" });
+  const [user, setUser] = useState<UserData>({ name: "", email: "", username: "", password: "" });
+  const [memberships, setMemberships] = useState<MembershipsData>({ name: "" });
 
   const isTenantValid = tenant.name && tenant.type && (tenant.type === "PHYSICAL" || tenant.size);  
   const isResponsibleValid = () => {
@@ -70,8 +83,8 @@ export const useCreateForm = () => {
             ...responsible,
             name: responsible.name.toUpperCase(),
             email: responsible.email.toLowerCase(),
-            cpf: tenant.type === "PHYSICAL" ? responsible.cpf.replace(/\D/g, "") : null, 
-            cnpj: tenant.type === "LEGAL" ? responsible.cnpj.replace(/\D/g, "") : null
+            cpf: tenant.type === "PHYSICAL" ? (responsible.cpf ?? "").replace(/\D/g, "") : null, 
+            cnpj: tenant.type === "LEGAL" ? (responsible.cnpj ?? "").replace(/\D/g, "") : null
         },
         user: {
           ...user,

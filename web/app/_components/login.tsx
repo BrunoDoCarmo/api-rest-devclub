@@ -81,7 +81,7 @@ const UserLogin = ({ setScreen, active = true, onLoginSuccess }: UserLoginProps)
       // O push é suficiente. Se o Dashboard for uma Server Component, 
       // ele lerá o novo cookie automaticamente ao entrar.
     } catch {
-      alert("Erro inesperado ao fazer login");
+      setErrorModal({ open: true, message: "Erro inesperado ao fazer login" });
     } finally {
       setLoading(false);
     }

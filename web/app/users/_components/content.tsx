@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { 
   Filter, 
@@ -67,31 +67,55 @@ const UserContent = () => {
 
   const totalPages = Math.ceil(totalItems / usersPerPage);  
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const token = Cookies.get("token");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/private/user-list?page=${currentPage}&limit=${usersPerPage}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+  const fetchUsers = useCallback(async (opts?: { showLoading?: boolean }) => {
+    const showLoading = opts?.showLoading ?? false;
 
-        if (!response.ok) throw new Error("Falha ao carregar usuários");
+    if (showLoading) setLoading(true);
+    setError(null);
 
-        const result = await response.json();
-        setUsers(result.data);
-        setTotalItems(result.meta.total);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Não foi possível carregar a lista de usuários.");
-        }
-      } finally {
-        setLoading(false);
+    try {
+      const token = Cookies.get("token");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/private/user-list?page=${currentPage}&limit=${usersPerPage}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (!response.ok) throw new Error("Falha ao carregar usuários");
+
+      const result = await response.json();
+      setUsers(result.data);
+      setTotalItems(result.meta.total);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Não foi possível carregar a lista de usuários.");
       }
-    };
-    fetchUsers();
-  }, [currentPage]);
+    } finally {
+      if (showLoading) setLoading(false);
+    }
+  }, [currentPage, usersPerPage]);
+
+  useEffect(() => {
+    fetchUsers({ showLoading: true });
+  }, [fetchUsers]);
+
+  // FUNÇÃO ESSENCIAL: Fecha e Limpa
+  const handleCloseModal = () => {
+    setIsCreateModalOpen(false);
+    setFormData({ email: "", name: "" }); // Aqui limpamos os campos
+  };
+
+  const handleUserCreated = async () => {
+    
+    // refaz a busca sem travar a tela inteira
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+      return;
+    }
+    handleCloseModal();
+    await fetchUsers({ showLoading: false });
+  };
 
   if (loading) return <Loading fullScreen label="Carregando usuários..." />;
   
@@ -108,7 +132,6 @@ const UserContent = () => {
   
   return (
     <div className="w-full mx-auto p-6 space-y-6 antialiased">
-      
       {/* Header & Actions */}
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div className="space-y-1">
@@ -288,6 +311,7 @@ const UserContent = () => {
           onClose={() => setIsCreateModalOpen(false)} 
           data={formData} 
           onChange={setFormData} 
+          onCreated={handleUserCreated}
         />
       </Modal>
     </div>

@@ -9,8 +9,8 @@ export interface TenantData {
 // Interface para o Responsible (Responsável)
 export interface ResponsibleData {
   name: string;
-  cpf: string;
-  cnpj: string;
+  cpf: string | null;
+  cnpj: string | null;
   public_place: string;
   number: string;
   complement: string;
